@@ -5,7 +5,8 @@ public abstract class User {
     private String address;
     private String email;
     private int heartRate;
-    //private List <TrainSession> trainPlans; 
+    //private List<Activity> activities;
+    //private List<TrainSession> sessions; 
 
     public User(String id, String name, String address, String email, int heartRate) {
         this.id = id;
@@ -63,7 +64,7 @@ public abstract class User {
         this.heartRate = heartRate;
     }
 
-    
+    // Equals method
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj==null || obj.getClass() != this.getClass()) return false;
@@ -75,6 +76,7 @@ public abstract class User {
                 this.heartRate == u.heartRate;
     }
     
+    // ToString method
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
