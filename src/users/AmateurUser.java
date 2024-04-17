@@ -8,6 +8,10 @@ public class AmateurUser extends User {
         super(u);
     }
 
+    public AmateurUser() {
+        super();
+    }
+
     public AmateurUser clone(){
         return new AmateurUser(this);
     }

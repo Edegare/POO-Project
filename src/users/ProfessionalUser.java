@@ -8,6 +8,10 @@ public class ProfessionalUser extends User{
     public ProfessionalUser(User u) {
         super(u);
     }
+    
+    public ProfessionalUser() {
+        super();
+    }
 
     public ProfessionalUser clone(){
         return new ProfessionalUser(this);

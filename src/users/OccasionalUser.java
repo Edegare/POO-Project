@@ -9,6 +9,10 @@ public class OccasionalUser extends User{
         super(u);
     }
 
+    public OccasionalUser() {
+        super();
+    }
+
     public OccasionalUser clone(){
         return new OccasionalUser(this);
     }

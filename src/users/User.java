@@ -24,6 +24,14 @@ public abstract class User {
         this.heartRate = u.getHeartRate();
     }
 
+    public User() {
+        this.id = "";
+        this.name = "";
+        this.address = "";
+        this.email = "";
+        this.heartRate = 0;
+    }
+
     //Getters & Setters
     public String getId() {
         return this.id;
@@ -64,10 +72,10 @@ public abstract class User {
         this.heartRate = heartRate;
     }
 
-    // Equals method
+    // Compare objects
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj==null || obj.getClass() != this.getClass()) return false;
+        if (!(obj instanceof User)) return false;
         User u = (User) obj;
         return this.id.equals(u.id) &&
                 this.name.equals(u.name) &&
@@ -75,8 +83,8 @@ public abstract class User {
                 this.email.equals(u.email) &&
                 this.heartRate == u.heartRate;
     }
-    
-    // ToString method
+
+    // ToString 
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
@@ -86,6 +94,8 @@ public abstract class User {
                 ", heartRate=" + heartRate + "}";
     }
 
+    //Clone
+    public abstract User clone();
     //Multiplier based on each type of user
     public abstract double multiplierCaloriesTypeUser();
 }
