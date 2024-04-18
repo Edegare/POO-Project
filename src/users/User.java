@@ -75,6 +75,11 @@ public abstract class User implements Serializable{
         this.heartRate = heartRate;
     }
 
+    //Other methods
+    public double heartRateFactor() {
+        return (1.0 + (double)heartRate * 0.01);
+    }
+
     // Compare objects
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -89,12 +94,20 @@ public abstract class User implements Serializable{
 
     // ToString 
     public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", heartRate=" + heartRate + "}";
+        return "User with id '" + this.id + "\' {" +
+                "name='" + this.name + '\'' +
+                ", address='" + this.address + '\'' +
+                ", email='" + this.email + '\'' +
+                ", heartRate=" + this.heartRate + " BPM}";
+    }
+
+    public String toStringProfile() {
+        return "User Profile:\n" + 
+                "ID = '" + this.id + "\'\n" +
+                "Name = '" + this.name + "\'\n" +
+                "Address ='" + this.address + "\'\n" +
+                "Email = '" + this.email + "\'\n" +
+                "Average Heart Rate=" + this.heartRate + " BPM";
     }
 
     //Clone

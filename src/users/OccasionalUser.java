@@ -20,6 +20,6 @@ public class OccasionalUser extends User {
     }
 
     public double multiplierCaloriesTypeUser() {
-        return 1.0; 
+        return 1.0 * this.heartRateFactor(); 
     }
 }

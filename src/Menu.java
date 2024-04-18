@@ -8,6 +8,7 @@ import users.User;
 import users.UserManager;
 
 
+
 public class Menu {
     private Scanner scanner;
     private UserManager userManager;
@@ -18,6 +19,7 @@ public class Menu {
         this.scanner = scanner;
     }
 
+    //================= Main Menu =================
     public void displayMainMenu() throws IOException {
         int choice;
         userManager = new UserManager();
@@ -43,9 +45,10 @@ public class Menu {
             // Display the main menu
             System.out.println("=== Menu ===");
 
-            System.out.println("1. Register (Create new account)");
-            System.out.println("2. Login (Use your account already registered)");
-            System.out.println("5. Exit");
+            System.out.println("1. Register (Create new Account)");
+            System.out.println("2. Login (Use an Account already registered)");
+            System.out.println("3. View all Users profiles registered");
+            System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
 
             // User choice
@@ -55,18 +58,18 @@ public class Menu {
             // Options 
             switch (choice) {
                 case 1:
+                    System.out.println();
                     this.menuRegister();
                     break;
                 case 2:
-                    
-                    break;
+                    System.out.println();
+                    this.menuLogin();
+                    break;   
                 case 3:
-                    
-                    break;
+                    System.out.println();
+                    System.out.println(this.userManager.toString());
+                    break; 
                 case 4:
-                    
-                    break;    
-                case 5:
                     //save users
                     try {
                         userManager.saveUsers(usersFile);
@@ -84,9 +87,10 @@ public class Menu {
 
             System.out.println();
 
-        } while (choice != 5);
+        } while (choice != 4);
     }
-
+ 
+    // ================= Register =================
     private void menuRegister() {
         String newId;
         String newName;
@@ -113,11 +117,10 @@ public class Menu {
 
             if (userManager.containsUser(newId)==true) {
                 System.out.println("This User already exists!");
+                System.out.println();
             }
             else valid=true;
-
-            System.out.println();
-            
+ 
         } while (valid==false);
         
         System.out.println("Your User Id is " + newId);
@@ -145,11 +148,11 @@ public class Menu {
         System.out.println();
 
         // Heart rate scan
-        System.out.print("Enter your Average Heart Rate: ");
+        System.out.print("Enter your Average Heart Rate (BPM): ");
         newHeartRate = scanner.nextInt();
         scanner.nextLine();
         if (newHeartRate==0) return;
-        System.out.println("Your Average Heart Rate is " + newHeartRate);
+        System.out.println("Your Average Heart Rate is " + newHeartRate + " BPM");
         System.out.println();
 
 
@@ -194,8 +197,79 @@ public class Menu {
         }
     }
 
-    /* private void menuLogin() {
-        
-    } */
+    // ================= Login =================
+    private void menuLogin() {
+        String userId;
+        boolean exists=false;
 
+        //Display login menu
+        System.out.println("===== Login =====");
+        System.out.println("Enter an account");
+
+        do {
+            // Id scan
+            System.out.print("Enter your id (Leave empty to return): ");
+
+            userId= scanner.nextLine();
+            if (userId.isEmpty()) {
+                return;
+            }
+
+            if (userManager.containsUser(userId)==false) {
+                System.out.println("This User doesn't exist!");
+                System.out.println();
+            }
+            else exists=true;
+
+        } while (exists==false);
+
+        // Get the user if sucess login
+        User user = this.userManager.getUser(userId);
+        System.out.println();  
+        System.out.println("You entered your account!");
+        System.out.println();  
+        userMenu(user);
+    }
+    
+    private void userMenu(User user) {
+        int choice;
+
+        do {
+            // Display the User menu
+            System.out.println("===== User =====");
+            System.out.println(user.toStringProfile());
+            System.out.println("1. ");
+            System.out.println("2. ");
+            System.out.println("3. ");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            // User choice
+            choice = this.scanner.nextInt();
+            this.scanner.nextLine(); 
+
+            // Options 
+            switch (choice) {
+                case 1:
+                    
+                    break;
+                case 2:
+                    
+                    break;   
+                case 3:
+                    
+                    break; 
+                case 4:
+                    
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+
+            System.out.println();
+
+        } while (choice != 4);
+    }
 }

@@ -19,6 +19,6 @@ public class AmateurUser extends User{
     }
 
     public double multiplierCaloriesTypeUser() {
-        return 1.2; 
+        return 1.1 * this.heartRateFactor(); 
     }
 }
