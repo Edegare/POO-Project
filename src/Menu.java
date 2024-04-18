@@ -1,23 +1,26 @@
 import java.util.Scanner;
 import java.io.*;
 
+import users.AmateurUser;
+import users.OccasionalUser;
+import users.ProfessionalUser;
+import users.User;
 import users.UserManager;
 
 
 public class Menu {
     private Scanner scanner;
+    private UserManager userManager;
+    private String usersFile = "data/users.ser";
+    //String activitiesFile = "data/activities.ser";
 
     public Menu(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    public void displayMainMenu() {
+    public void displayMainMenu() throws IOException {
         int choice;
-
-        String usersFile = "data/users.ser";
-        //String activitiesFile = "data/activities.ser";
-
-        UserManager userManager = new UserManager();
+        userManager = new UserManager();
 
         //load users
         File file = new File(usersFile);
@@ -52,18 +55,26 @@ public class Menu {
             // Options 
             switch (choice) {
                 case 1:
-                    this.menuRegister(userManager);
+                    this.menuRegister();
                     break;
                 case 2:
-                    //this.menuLogin(userManager);
+                    
                     break;
                 case 3:
-                    //this.menuActivities();
+                    
                     break;
                 case 4:
-                    //this.menuTrainSession();
+                    
                     break;    
                 case 5:
+                    //save users
+                    try {
+                        userManager.saveUsers(usersFile);
+                        System.out.println("Users data saved successfully.");
+                    } catch (IOException e) {
+                            System.out.println("Error saving users: " + e.getMessage());
+                    }
+                    
                     System.out.println("Exiting...");
                     break;
                 default:
@@ -76,15 +87,16 @@ public class Menu {
         } while (choice != 5);
     }
 
-    private void menuRegister(UserManager userManager) {
+    private void menuRegister() {
         String newId;
         String newName;
         String newAddress;
         String newEmail;
         int newHeartRate=0;
+        int choice;
 
         boolean valid = false;
-        boolean stop = false;
+
         //Display register menu
         System.out.println("===== Register =====");
         System.out.println("Create a new account");
@@ -140,10 +152,49 @@ public class Menu {
         System.out.println("Your Average Heart Rate is " + newHeartRate);
         System.out.println();
 
-        //TO DO
+
+        User newUser = null;
+
+        do {
+            System.out.println("Choose your type of user:");
+            System.out.println("1. Professional");
+            System.out.println("2. Amateur");
+            System.out.println("3. Occasional");
+            System.out.println("4. Return to Main Menu");
+            System.out.print("Enter your choice: ");
+
+            // User choice
+            choice = this.scanner.nextInt();
+            this.scanner.nextLine();
+
+        
+            switch (choice) {
+                case 1:
+                    newUser = new ProfessionalUser(newId, newName, newAddress, newEmail, newHeartRate);
+                    break;
+                case 2:
+                    newUser = new AmateurUser(newId, newName, newAddress, newEmail, newHeartRate);
+                    break;
+                case 3:
+                    newUser = new OccasionalUser(newId, newName, newAddress, newEmail, newHeartRate);
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+            System.out.println();
+            
+        } while (choice<1 || choice>4);
+        if (choice!=4 && newUser!=null) {
+            userManager.addUser(newUser);
+            System.out.println("New User created successfully!");
+        }
     }
 
-    /* private void menuLogin(UserManager userManager) {
+    /* private void menuLogin() {
         
     } */
 

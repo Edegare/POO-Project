@@ -61,7 +61,7 @@ public class UserManager implements Serializable{
     }
 
     // Serialization (Save and load users)
-    public void saveUsersMap(String path) throws IOException {
+    public void saveUsers(String path) throws IOException {
         try (FileOutputStream fileOut = new FileOutputStream(path);
         ObjectOutputStream out = new ObjectOutputStream(fileOut);){
             out.writeObject(this.usersMap);

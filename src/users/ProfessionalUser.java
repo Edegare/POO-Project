@@ -1,4 +1,6 @@
 package users;
+
+
 public class ProfessionalUser extends User{
 
     public ProfessionalUser(String id, String name, String address, String email, int heartRate) {

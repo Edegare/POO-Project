@@ -1,5 +1,7 @@
 package users;
-public class OccasionalUser extends User{
+
+
+public class OccasionalUser extends User {
     
     public OccasionalUser(String id, String name, String address, String email, int heartRate) {
         super(id, name, address, email, heartRate);
