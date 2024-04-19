@@ -1,29 +1,29 @@
 package activities;
 
-public class WeightliftingActivity extends Activity {
+public class WeightLiftingActivity extends Activity {
     private int repetitionsPerSet;
     private int sets;
-    private int weight; //weight ou weightKg
+    private int weight;
 
-    public WeightliftingActivity(String name, double durationHours, int averageHeartRate, User user, int repetitionsPerSet, int sets, int weight) {
-        super(name, durationHours, averageHeartRate, user);
+    public WeightLiftingActivity(String name, double durationHours, int repetitionsPerSet, int sets, int weight) {
+        super(name, durationHours);
         this.repetitionsPerSet = repetitionsPerSet;
         this.sets = sets;
-        this.weightKg = weight;
+        this.weight = weight;
     }
 
-    public WeightliftingActivity(WeightliftingActivity activity) {
+    public WeightLiftingActivity(WeightLiftingActivity activity) {
         super(activity);
         this.repetitionsPerSet = activity.getRepetitionsPerSet();
         this.sets = activity.getSets();
-        this.weightKg = activity.getWeightKg();
+        this.weight = activity.getWeight();
     }
     
-    public WeightliftingActivity() {
+    public WeightLiftingActivity() {
         super();
         this.repetitionsPerSet = 0;
         this.sets = 0;
-        this.weightKg = 0;
+        this.weight = 0;
     }
 
     public int getRepetitionsPerSet() {
@@ -46,16 +46,16 @@ public class WeightliftingActivity extends Activity {
         return this.weight;
     }
 
-    public void setWeightKg(int weight) {
-        this.weightKg = weight;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
-    @Override
+
     public double calculateCalories() {
         int total = 0;
 
 
-        //if (isHard) total = total * 1.5;
+
         return total;
     }
 }

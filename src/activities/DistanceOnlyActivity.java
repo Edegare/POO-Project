@@ -3,8 +3,8 @@ package activities;
 public class DistanceOnlyActivity extends Activity {
     private int distance;
 
-    public DistanceOnlyActivity(String name, double durationHours, int averageHeartRate, User user) {
-        super(name, durationHours, averageHeartRate, user);
+    public DistanceOnlyActivity(String name, double durationHours, int distance) {
+        super(name, durationHours);
         this.distance = distance;
     }
 
@@ -26,14 +26,9 @@ public class DistanceOnlyActivity extends Activity {
         this.distance = distance;
     }
 
-    @Override
-    public double calculateCalories(activity) {
-        //total = MET x peso (kg) x duração (h).
-        //MET = 10
+    public double calculateCalories() {
         int total = 0;
 
-        total = 10 * (activity.getDurationHours());
-        //if (isHard) total = total * 1.5;
         return total;
     }
 }

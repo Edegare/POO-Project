@@ -4,8 +4,8 @@ public class DistanceAndElevationActivity extends Activity {
     private int distance;
     private int elevation;
 
-    public DistanceAndElevationActivity(String name, double durationHours, int averageHeartRate, User user) {
-        super(name, durationHours, averageHeartRate, user);
+    public DistanceAndElevationActivity(String name, double durationHours, int distance, int elevation) {
+        super(name, durationHours);
         this.distance = distance;
         this.elevation = elevation;
     }
@@ -38,13 +38,8 @@ public class DistanceAndElevationActivity extends Activity {
         this.distance = distance;
     }
 
-    @Override
     public double calculateCalories() {
         int total = 0;
-
-
-
-        //if (isHard) total = total * 1.5;
         return total;
     }
 }

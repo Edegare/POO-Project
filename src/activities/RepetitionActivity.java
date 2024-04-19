@@ -3,17 +3,17 @@ package activities;
 public class RepetitionActivity extends Activity {
     private int repetitions;
 
-    public RepetitionActivity(String name, double durationHours, int averageHeartRate, User user, int repetitions) {
-        super(name, durationHours, averageHeartRate, user);
+    public RepetitionActivity(String name, double durationHours, int repetitions) {
+        super(name, durationHours);
         this.repetitions = repetitions;
     }
 
-    public RepetitiveActivity(RepetitiveActivity activity) {
+    public RepetitionActivity(RepetitionActivity activity) {
         super(activity);
         this.repetitions = activity.getRepetitions();
     }
 
-    public RepetitiveActivity() {
+    public RepetitionActivity() {
         super();
         this.repetitions = 0;
     }
@@ -26,12 +26,10 @@ public class RepetitionActivity extends Activity {
         this.repetitions = repetitions;
     }
 
-    @Override
+
     public double calculateCalories() {
         int total = 0;
 
-
-        //if (isHard) total = total * 1.5;
         return total;
     }
 }
