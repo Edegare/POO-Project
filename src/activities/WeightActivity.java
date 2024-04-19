@@ -1,25 +1,25 @@
 package activities;
 
-public class WeightLiftingActivity extends Activity {
+public class WeightActivity extends Activity {
     private int repetitionsPerSet;
     private int sets;
     private int weight;
 
-    public WeightLiftingActivity(String name, double durationHours, int repetitionsPerSet, int sets, int weight) {
+    public WeightActivity(String name, double durationHours, int repetitionsPerSet, int sets, int weight) {
         super(name, durationHours);
         this.repetitionsPerSet = repetitionsPerSet;
         this.sets = sets;
         this.weight = weight;
     }
 
-    public WeightLiftingActivity(WeightLiftingActivity activity) {
+    public WeightActivity(WeightActivity activity) {
         super(activity);
         this.repetitionsPerSet = activity.getRepetitionsPerSet();
         this.sets = activity.getSets();
         this.weight = activity.getWeight();
     }
     
-    public WeightLiftingActivity() {
+    public WeightActivity() {
         super();
         this.repetitionsPerSet = 0;
         this.sets = 0;
