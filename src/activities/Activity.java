@@ -2,7 +2,7 @@ package activities;
 
 public abstract class Activity {
     private String name;
-    private double duration; //Seconds
+    private double duration; //Hours
 
 
     public Activity(String name, double duration) {
@@ -18,7 +18,6 @@ public abstract class Activity {
     public Activity() {
         this.name = "";
         this.duration = 0;
-
     }
 
     //Getters & Setters
@@ -47,5 +46,6 @@ public abstract class Activity {
     //ToString
     //public abstract toString clone();
 
-    //public abstract void calculateCalories();
+    // Calculate calories method based on activity attributes
+    public abstract double calculateCalories();
 }

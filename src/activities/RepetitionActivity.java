@@ -1,8 +1,9 @@
 package activities;
 
-public class RepetitionActivity extends Activity {
+public abstract class RepetitionActivity extends Activity {
     private int repetitions;
 
+    //Constructors
     public RepetitionActivity(String name, double durationHours, int repetitions) {
         super(name, durationHours);
         this.repetitions = repetitions;
@@ -18,6 +19,7 @@ public class RepetitionActivity extends Activity {
         this.repetitions = 0;
     }
 
+    //Getters and Setters
     public int getRepetitions() {
         return this.repetitions;
     }
@@ -26,10 +28,12 @@ public class RepetitionActivity extends Activity {
         this.repetitions = repetitions;
     }
 
-
+    // Calculate calories method
     public double calculateCalories() {
-        int total = 0;
+        double total = 0;
 
         return total;
     }
+
+    public abstract double standartCalories();
 }
