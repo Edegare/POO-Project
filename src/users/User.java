@@ -76,6 +76,7 @@ public abstract class User implements Serializable{
     }
 
     //Other methods
+    //Calculate a heart rate factor to help calculate calories
     public double heartRateFactor() {
         return (1.0 + (double)heartRate * 0.01);
     }

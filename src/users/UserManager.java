@@ -60,6 +60,18 @@ public class UserManager implements Serializable{
         return this.usersMap.size();
     }
 
+    // Update user info
+    public void updateUser(User userUpdated) {
+        String userId = userUpdated.getId();
+
+        if (this.usersMap.containsKey(userId)) {
+            this.usersMap.put(userId, userUpdated);
+            System.out.println("User updated successfully!");
+        } else {
+            System.out.println("User not found!");
+        }
+    }
+
     // Serialization (Save and load users)
     public void saveUsers(String path) throws IOException {
         try (FileOutputStream fileOut = new FileOutputStream(path);
