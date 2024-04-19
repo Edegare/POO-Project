@@ -61,7 +61,7 @@ public class UserManager implements Serializable{
     }
 
     // Serialization (Save and load users)
-    public void saveUsersMap(String path) throws IOException {
+    public void saveUsers(String path) throws IOException {
         try (FileOutputStream fileOut = new FileOutputStream(path);
         ObjectOutputStream out = new ObjectOutputStream(fileOut);){
             out.writeObject(this.usersMap);
@@ -79,12 +79,13 @@ public class UserManager implements Serializable{
 
     //toString
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("UserManager{");
-        sb.append("users=").append(this.usersMap.toString());
-        sb.append('}');
-        return sb.toString();
+        String allUsers = this.usersMap.values().stream()
+                .map(user->user.clone().toString())
+                .collect(Collectors.joining("\n"));
+    
+        return "All Users Registered:\n" + allUsers;
     }
+    
 
     //Clone
     public UserManager clone() {

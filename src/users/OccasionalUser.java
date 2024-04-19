@@ -1,5 +1,7 @@
 package users;
-public class OccasionalUser extends User{
+
+
+public class OccasionalUser extends User {
     
     public OccasionalUser(String id, String name, String address, String email, int heartRate) {
         super(id, name, address, email, heartRate);
@@ -18,6 +20,6 @@ public class OccasionalUser extends User{
     }
 
     public double multiplierCaloriesTypeUser() {
-        return 1.0; 
+        return 1.0 * this.heartRateFactor(); 
     }
 }

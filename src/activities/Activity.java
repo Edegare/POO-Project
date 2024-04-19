@@ -121,7 +121,7 @@ public class DistanceAndElevationActivity extends Activity {
     public double calculateCalories() {
         int total = 0;
 
-        
+
 
         if (isHard) total = total * 1.5;
 
