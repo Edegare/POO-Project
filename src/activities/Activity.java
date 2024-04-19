@@ -2,22 +2,22 @@ package activities;
 
 public abstract class Activity {
     private String name;
-    private double durationHours;
+    private double duration; //Seconds
 
 
-    public Activity(String name, double durationHours) {
+    public Activity(String name, double duration) {
         this.name = name;
-        this.durationHours = durationHours;
+        this.duration = duration;
     }
 
     public Activity(Activity a) {
         this.name = a.getName();
-        this.durationHours = a.getDurationHours();
+        this.duration = a.getDuration();
     }
 
     public Activity() {
         this.name = "";
-        this.durationHours = 0;
+        this.duration = 0;
 
     }
 
@@ -30,12 +30,12 @@ public abstract class Activity {
         this.name = name;
     }
 
-    public double getDurationHours() {
-        return this.durationHours;
+    public double getDuration() {
+        return this.duration;
     }
 
-    public void setDurationHours(double durationHours) {
-        this.durationHours = durationHours;
+    public void setDuration(double duration) {
+        this.duration = duration;
     }
 
     //Equals 
