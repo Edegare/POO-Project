@@ -1,19 +1,19 @@
 package activities;
 
-public class DistanceOnlyActivity extends Activity {
+public class DistanceAltimetryActivity extends Activity {
     private int distance;
 
-    public DistanceOnlyActivity(String name, double durationHours, int distance) {
+    public DistanceAltimetryActivity(String name, double durationHours, int distance) {
         super(name, durationHours);
         this.distance = distance;
     }
 
-    public DistanceOnlyActivity(DistanceOnlyActivity activity) {
+    public DistanceAltimetryActivity(DistanceAltimetryActivity activity) {
         super(activity);
         this.distance = activity.getDistance();
     }
 
-    public DistanceOnlyActivity() {
+    public DistanceAltimetryActivity() {
         super();
         this.distance = 0;
     }
@@ -28,7 +28,6 @@ public class DistanceOnlyActivity extends Activity {
 
     public double calculateCalories() {
         int total = 0;
-
         return total;
     }
 }

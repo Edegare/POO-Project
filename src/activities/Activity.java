@@ -1,6 +1,6 @@
 package activities;
 
-public class Activity {
+public abstract class Activity {
     private String name;
     private double durationHours;
 
@@ -37,4 +37,15 @@ public class Activity {
     public void setDurationHours(double durationHours) {
         this.durationHours = durationHours;
     }
+
+    //Equals 
+    //public abstract boolean equals(Object obj);
+
+    //Clone 
+    //public abstract Activity clone();
+
+    //ToString
+    //public abstract toString clone();
+
+    //public abstract void calculateCalories();
 }
