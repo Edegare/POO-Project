@@ -1,4 +1,5 @@
 package users;
+
 public abstract class User {
     private String id;
     private String name;
