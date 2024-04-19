@@ -17,12 +17,13 @@ public class Menu {
 
     public Menu(Scanner scanner) {
         this.scanner = scanner;
+        this.userManager = new UserManager();
     }
 
     //================= Main Menu =================
     public void displayMainMenu() throws IOException {
         int choice;
-        userManager = new UserManager();
+
 
         //load users
         File file = new File(usersFile);
@@ -230,46 +231,90 @@ public class Menu {
         System.out.println();  
         userMenu(user);
     }
-    
+
+    // ================= User Menu after logging in =================
     private void userMenu(User user) {
         int choice;
-
+        
         do {
             // Display the User menu
+            System.out.println(); 
             System.out.println("===== User =====");
             System.out.println(user.toStringProfile());
-            System.out.println("1. ");
-            System.out.println("2. ");
-            System.out.println("3. ");
-            System.out.println("4. Exit");
+            System.out.println("1. Change my Name");
+            System.out.println("2. Change my Address");
+            System.out.println("3. Change my Email");
+            System.out.println("4. Change my Average Heart Rate");
+            System.out.println("10. Exit to Menu");
             System.out.print("Enter your choice: ");
 
             // User choice
             choice = this.scanner.nextInt();
             this.scanner.nextLine(); 
+            
+            System.out.println();
 
             // Options 
             switch (choice) {
                 case 1:
-                    
+                    System.out.println("Write your new Name: ");
+                    String newName = this.scanner.nextLine();
+
+                    // Update info
+                    if (!(newName.isEmpty())) {
+                        user.setName(newName);
+                        System.out.println("You changed your Name!");
+                        this.userManager.updateUser(user);
+                    }
+                    else System.out.println("No changes done!");
+
                     break;
                 case 2:
-                    
+                    System.out.println("Write your new Address: ");
+                    String newAdrress = this.scanner.nextLine();
+
+                    // Update info
+                    if (!(newAdrress.isEmpty())) {
+                        user.setAddress(newAdrress);
+                        System.out.println("You changed your Address!");
+                        this.userManager.updateUser(user);
+                    }
+                    else System.out.println("No changes done!");
+
                     break;   
                 case 3:
+                    System.out.println("Write your new Email: ");
+                    String newEmail = this.scanner.nextLine();
                     
+                    // Update info
+                    if (!(newEmail.isEmpty())) {
+                        user.setEmail(newEmail);
+                        System.out.println("You changed your Email!");
+                        this.userManager.updateUser(user);
+                    }
+                    else System.out.println("No changes done!");
+
                     break; 
                 case 4:
+                    System.out.println("Write your new Average Heart Rate: ");
+
+                    int newHeartRate = this.scanner.nextInt();
+                    this.scanner.nextLine(); 
                     
+                    // Update info
+                    user.setHeartRate(newHeartRate);
+                    System.out.println("You changed your Average Heart Rate!");
+                    this.userManager.updateUser(user);
+                    break; 
+                case 10:
                     System.out.println("Exiting...");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
                     break;
             }
-
             System.out.println();
 
-        } while (choice != 4);
+        } while (choice != 10);
     }
 }
