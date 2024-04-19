@@ -1,10 +1,11 @@
 package activities;
 
-public class WeightActivity extends Activity {
+public abstract class WeightActivity extends Activity {
     private int repetitionsPerSet;
     private int sets;
     private int weight;
 
+    //Constructors
     public WeightActivity(String name, double durationHours, int repetitionsPerSet, int sets, int weight) {
         super(name, durationHours);
         this.repetitionsPerSet = repetitionsPerSet;
@@ -26,6 +27,7 @@ public class WeightActivity extends Activity {
         this.weight = 0;
     }
 
+    //Getters and Setters
     public int getRepetitionsPerSet() {
         return this.repetitionsPerSet;
     }
@@ -51,11 +53,14 @@ public class WeightActivity extends Activity {
     }
 
 
+    // Calculate calories method
     public double calculateCalories() {
-        int total = 0;
+        double total = 0;
 
 
 
         return total;
     }
+
+    public abstract double standartCalories();
 }
