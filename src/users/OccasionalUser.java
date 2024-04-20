@@ -3,8 +3,8 @@ package users;
 
 public class OccasionalUser extends User {
     
-    public OccasionalUser(String id, String name, String address, String email, int heartRate) {
-        super(id, name, address, email, heartRate);
+    public OccasionalUser(String id, String name, String address, String email, int heartRate, int weight) {
+        super(id, name, address, email, heartRate, weight);
     }
 
     public OccasionalUser(User u) {
@@ -20,6 +20,6 @@ public class OccasionalUser extends User {
     }
 
     public double multiplierCaloriesTypeUser() {
-        return 1.0 * this.heartRateFactor(); 
+        return 1.0 * this.heartRateFactor() * this.getWeight(); 
     }
 }

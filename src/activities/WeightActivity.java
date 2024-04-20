@@ -1,39 +1,39 @@
 package activities;
 
 public abstract class WeightActivity extends Activity {
-    private int repetitionsPerSet;
+    private int repetitions; //per set
     private int sets;
     private int weight;
 
     //Constructors
-    public WeightActivity(String name, double durationHours, int repetitionsPerSet, int sets, int weight) {
-        super(name, durationHours);
-        this.repetitionsPerSet = repetitionsPerSet;
+    public WeightActivity(double duration, int repetitions, int sets, int weight) {
+        super(duration);
+        this.repetitions = repetitions;
         this.sets = sets;
         this.weight = weight;
     }
 
     public WeightActivity(WeightActivity activity) {
         super(activity);
-        this.repetitionsPerSet = activity.getRepetitionsPerSet();
+        this.repetitions = activity.getRepetitions();
         this.sets = activity.getSets();
         this.weight = activity.getWeight();
     }
     
     public WeightActivity() {
         super();
-        this.repetitionsPerSet = 0;
+        this.repetitions = 0;
         this.sets = 0;
         this.weight = 0;
     }
 
     //Getters and Setters
-    public int getRepetitionsPerSet() {
-        return this.repetitionsPerSet;
+    public int getRepetitions() {
+        return this.repetitions;
     }
     
-    public void setRepetitionsPerSet(int repetitionsPerSet) {
-        this.repetitionsPerSet = repetitionsPerSet;
+    public void setRepetitions(int repetitions) {
+        this.repetitions = repetitions;
     }
 
     public int getSets() {
@@ -55,12 +55,9 @@ public abstract class WeightActivity extends Activity {
 
     // Calculate calories method
     public double calculateCalories() {
-        double total = 0;
 
-
-
+        double total = this.standartCalories() * ((double) (this.weight * this.repetitions * this.sets));
         return total;
     }
 
-    public abstract double standartCalories();
 }

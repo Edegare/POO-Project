@@ -7,16 +7,18 @@ public abstract class User implements Serializable{
     private String name;
     private String address;
     private String email;
-    private int heartRate;
+    private int heartRate; //BPM
+    private int weight; //Kg
     //private List<Activity> activities;
     //private List<TrainSession> sessions; 
 
-    public User(String id, String name, String address, String email, int heartRate) {
+    public User(String id, String name, String address, String email, int heartRate, int weight) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.email = email;
         this.heartRate = heartRate;
+        this.weight = weight;
     }
 
     public User(User u) {
@@ -25,6 +27,7 @@ public abstract class User implements Serializable{
         this.address = u.getAddress();
         this.email = u.getEmail();
         this.heartRate = u.getHeartRate();
+        this.weight = u.getWeight();
     }
 
     public User() {
@@ -33,6 +36,7 @@ public abstract class User implements Serializable{
         this.address = "";
         this.email = "";
         this.heartRate = 0;
+        this.weight = 0;
     }
 
     //Getters & Setters
@@ -75,6 +79,13 @@ public abstract class User implements Serializable{
         this.heartRate = heartRate;
     }
 
+    public int getWeight() {
+        return this.weight;
+    }
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
     //Other methods
     //Calculate a heart rate factor to help calculate calories
     public double heartRateFactor() {
@@ -90,7 +101,8 @@ public abstract class User implements Serializable{
                 this.name.equals(u.name) &&
                 this.address.equals(u.address) &&
                 this.email.equals(u.email) &&
-                this.heartRate == u.heartRate;
+                this.heartRate == u.heartRate &&
+                this.weight == u.weight;
     }
 
     // ToString 
@@ -99,16 +111,18 @@ public abstract class User implements Serializable{
                 "name='" + this.name + '\'' +
                 ", address='" + this.address + '\'' +
                 ", email='" + this.email + '\'' +
-                ", heartRate=" + this.heartRate + " BPM}";
+                ", heartRate= " + this.heartRate + " BPM" + 
+                ", weight= " + this.weight + " Kg}";
     }
 
     public String toStringProfile() {
         return "User Profile:\n" + 
                 "ID = '" + this.id + "\'\n" +
                 "Name = '" + this.name + "\'\n" +
-                "Address ='" + this.address + "\'\n" +
+                "Address = '" + this.address + "\'\n" +
                 "Email = '" + this.email + "\'\n" +
-                "Average Heart Rate=" + this.heartRate + " BPM";
+                "Average Heart Rate= " + this.heartRate + " BPM\n" +
+                "Weight= " + this.weight + " Kg";
     }
 
     //Clone

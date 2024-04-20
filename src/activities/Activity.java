@@ -1,33 +1,22 @@
 package activities;
 
 public abstract class Activity {
-    private String name;
     private double duration; //Hours
 
 
-    public Activity(String name, double duration) {
-        this.name = name;
+    public Activity(double duration) {
         this.duration = duration;
     }
 
     public Activity(Activity a) {
-        this.name = a.getName();
         this.duration = a.getDuration();
     }
 
     public Activity() {
-        this.name = "";
         this.duration = 0;
     }
 
     //Getters & Setters
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public double getDuration() {
         return this.duration;
@@ -48,4 +37,7 @@ public abstract class Activity {
 
     // Calculate calories method based on activity attributes
     public abstract double calculateCalories();
+
+    // Standart calories per hour fo activity
+    public abstract double standartCalories();
 }
