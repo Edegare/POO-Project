@@ -13,7 +13,6 @@ public class Menu {
     private Scanner scanner;
     private UserManager userManager;
     private String usersFile = "data/users.ser";
-    //String activitiesFile = "data/activities.ser";
 
     public Menu(Scanner scanner) {
         this.scanner = scanner;
@@ -98,6 +97,7 @@ public class Menu {
         String newAddress;
         String newEmail;
         int newHeartRate=0;
+        int newWeight=0;
         int choice;
 
         boolean valid = false;
@@ -156,6 +156,12 @@ public class Menu {
         System.out.println("Your Average Heart Rate is " + newHeartRate + " BPM");
         System.out.println();
 
+        System.out.print("Enter your Average Heart Rate (BPM): ");
+        newWeight = scanner.nextInt();
+        scanner.nextLine();
+        if (newWeight==0) return;
+        System.out.println("Your Weight is " + newWeight + " Kg");
+        System.out.println();
 
         User newUser = null;
 
@@ -174,13 +180,13 @@ public class Menu {
         
             switch (choice) {
                 case 1:
-                    newUser = new ProfessionalUser(newId, newName, newAddress, newEmail, newHeartRate);
+                    newUser = new ProfessionalUser(newId, newName, newAddress, newEmail, newHeartRate, newWeight);
                     break;
                 case 2:
-                    newUser = new AmateurUser(newId, newName, newAddress, newEmail, newHeartRate);
+                    newUser = new AmateurUser(newId, newName, newAddress, newEmail, newHeartRate, newWeight);
                     break;
                 case 3:
-                    newUser = new OccasionalUser(newId, newName, newAddress, newEmail, newHeartRate);
+                    newUser = new OccasionalUser(newId, newName, newAddress, newEmail, newHeartRate, newWeight);
                     break;
                 case 4:
                     System.out.println("Exiting...");
@@ -245,6 +251,7 @@ public class Menu {
             System.out.println("2. Change my Address");
             System.out.println("3. Change my Email");
             System.out.println("4. Change my Average Heart Rate");
+            System.out.println("5. Change my Weight");
             System.out.println("10. Exit to Menu");
             System.out.print("Enter your choice: ");
 
@@ -306,6 +313,17 @@ public class Menu {
                     System.out.println("You changed your Average Heart Rate!");
                     this.userManager.updateUser(user);
                     break; 
+                case 5:
+                    System.out.println("Write your new Weight: ");
+
+                    int newWeight = this.scanner.nextInt();
+                    this.scanner.nextLine(); 
+                    
+                    // Update info
+                    user.setWeight(newWeight);
+                    System.out.println("You changed your Weight!");
+                    this.userManager.updateUser(user);
+                    break;     
                 case 10:
                     System.out.println("Exiting...");
                     break;

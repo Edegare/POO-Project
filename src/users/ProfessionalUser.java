@@ -3,8 +3,8 @@ package users;
 
 public class ProfessionalUser extends User{
 
-    public ProfessionalUser(String id, String name, String address, String email, int heartRate) {
-        super(id, name, address, email, heartRate);
+    public ProfessionalUser(String id, String name, String address, String email, int heartRate, int weight) {
+        super(id, name, address, email, heartRate ,weight);
     }
 
     public ProfessionalUser(User u) {
@@ -21,6 +21,6 @@ public class ProfessionalUser extends User{
 
     public double multiplierCaloriesTypeUser() {
         
-        return 1.3 * this.heartRateFactor();
+        return 1.2 * this.heartRateFactor() * this.getWeight();
     }
 }

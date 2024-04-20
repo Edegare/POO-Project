@@ -1,11 +1,12 @@
 package activities;
 
 public abstract class RepetitionActivity extends Activity {
-    private int repetitions;
-
+    private int repetitions; // per set
+    private int sets;
+    
     //Constructors
-    public RepetitionActivity(String name, double durationHours, int repetitions) {
-        super(name, durationHours);
+    public RepetitionActivity(double duration, int repetitions) {
+        super(duration);
         this.repetitions = repetitions;
     }
 
@@ -28,12 +29,20 @@ public abstract class RepetitionActivity extends Activity {
         this.repetitions = repetitions;
     }
 
+    public int getSets() {
+        return this.sets;
+    }
+
+    public void setSets(int sets) {
+        this.sets = sets;
+    }
+
     // Calculate calories method
     public double calculateCalories() {
-        double total = 0;
+
+        double total = this.standartCalories() * ((double) (this.getRepetitions() * this.getSets()));
 
         return total;
     }
 
-    public abstract double standartCalories();
 }

@@ -1,12 +1,12 @@
 package activities;
 
 public abstract class DistanceAltimetryActivity extends Activity {
-    private int distance;
-    private int height; 
+    private double distance; //Kms
+    private double height; //kms
 
     //Constructors
-    public DistanceAltimetryActivity(String name, double durationHours, int distance, int height) {
-        super(name, durationHours);
+    public DistanceAltimetryActivity(double duration, int distance, int height) {
+        super(duration);
         this.distance = distance;
         this.height = height;
     }
@@ -23,30 +23,27 @@ public abstract class DistanceAltimetryActivity extends Activity {
     }
 
     //Getters and Setters
-    public int getDistance() {
+    public double getDistance() {
         return this.distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return this.height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(double height) {
         this.height = height;
     }
+
     // Calculate calories method
     public double calculateCalories() {
-
-        double mediumSpeed = (this.getDistance() + this.getHeight())/this.getDuration();
         
-        double total = this.standartCalories() * this.getDuration() * (mediumSpeed);
+        double total = this.standartCalories() * (this.distance + this.height);
 
         return total;
     }
-
-    public abstract double standartCalories();
 }

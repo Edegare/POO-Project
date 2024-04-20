@@ -1,11 +1,11 @@
 package activities;
 
 public abstract class DistanceActivity extends Activity {
-    private int distance;
+    private double distance; //Kms
 
     //Constructors
-    public DistanceActivity(String name, double durationHours, int distance) {
-        super(name, durationHours);
+    public DistanceActivity(double duration, int distance) {
+        super(duration);
         this.distance = distance;
     }
 
@@ -20,20 +20,20 @@ public abstract class DistanceActivity extends Activity {
     }
 
     //Getters and Setters
-    public int getDistance() {
+    public double getDistance() {
         return this.distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(double distance) {
         this.distance = distance;
     }
 
     // Calculate calories method
     public double calculateCalories() {
-        double total = 0;
+
+        double total = this.standartCalories() * this.getDistance();
 
         return total;
     }
 
-    public abstract double standartCalories();
 }
