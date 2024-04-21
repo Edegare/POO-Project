@@ -2,27 +2,50 @@ package activities;
 
 public class Canoe extends DistanceActivity {
 
-    private static String name = "Canoe";
-    private static double kcal = 4.0;
+    private final String name = "Canoe";
+    private final double cal = 0.9;
 
-    public StreetRun(double duration, int distance) {
+    //Constructors
+    public Canoe(double duration, double distance) {
         super(duration,distance);
     }
 
-    public String getName() {
-        return Canoe.name;
+    public Canoe() {
+        super();
     }
 
-    public double standardCalories() {
-        return Canoe.kcal; //kcal per (km * weight)
+    public Canoe(Canoe a) {
+        super(a);
+    }
+
+    //getters
+    public String getName() {
+        return this.name;
+    }
+
+    public double caloriesFactor() {
+        return this.cal; 
+    }
+
+    // Compare objects
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Canoe)) return false;
+        Canoe u = (Canoe) obj;
+        return this.getName().equals(u.getName()) &&
+               this.getDuration()==u.getDuration() &&
+               this.getDistance()==u.getDistance();
     }
 
     //ToString
     public String toString() {
         return "Canoeing {" +
                 "duration = " + getDuration() +
-                ", average heart rate = " + getHeartRate() +
                 ", distance = " + getDistance() + " Km}";
     }
 
+    //Clone
+    public Canoe clone() {
+        return new Canoe(this);
+    }
 }

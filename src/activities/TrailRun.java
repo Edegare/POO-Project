@@ -2,27 +2,52 @@ package activities;
 
 public class TrailRun extends DistanceAltimetryActivity {
 
-    private static String name = "Trail Run";
-    private static double kcal = 1.3;
+    private final String name = "Trail Run";
+    private final double cal = 1.3;
 
-    public TrailRun(double duration, int distance, int height) {
-        super(duration,distance,height);
+    //Constructors
+    public TrailRun(double duration, double distance, double height) {
+        super(duration,distance, height);
     }
 
+    public TrailRun() {
+        super();
+    }
+
+    public TrailRun(TrailRun a) {
+        super(a);
+    }
+
+    //getters
     public String getName() {
-        return TrailRun.name;
+        return this.name;
     }
 
-    public double standardCalories() {
-        return TrailRun.kcal; //kcal per (km * weight)
+    public double caloriesFactor() {
+        return this.cal; //cal per (km * weight)
+    }
+
+    // Compare objects
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof TrailRun)) return false;
+        TrailRun u = (TrailRun) obj;
+        return this.getName().equals(u.getName()) &&
+               this.getDuration()==u.getDuration() &&
+               this.getDistance()==u.getDistance() &&
+               this.getHeight()==u.getHeight();
     }
 
     //ToString
     public String toString() {
-        return "Trail Run {" +
+        return "Track Run {" +
                 "duration = " + getDuration() +
-                ", average heart rate = " + getHeartRate() +
                 ", distance = " + getDistance() + " Km" +
-                ", height = " + getHeight() + " Km}";
+                ", height = " + getHeight() + " Km";
+    }
+
+    //clone
+    public TrailRun clone() {
+        return new TrailRun(this);
     }
 }

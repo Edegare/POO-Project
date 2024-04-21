@@ -1,12 +1,11 @@
 package activities;
 
-import users.ProfessionalUser;
 
 public abstract class DistanceActivity extends Activity {
     private double distance; //Kms
 
     //Constructors
-    public DistanceActivity(double duration, int distance) {
+    public DistanceActivity(double duration, double distance) {
         super(duration);
         this.distance = distance;
     }
@@ -33,14 +32,9 @@ public abstract class DistanceActivity extends Activity {
     // Calculate calories method
     public double calculateCalories() {
 
-        double total = this.standardCalories() * this.getDistance();
+        double total = this.caloriesFactor() * this.getDistance();
 
         return total;
-    }
-
-    //Clone
-    public DistanceActivity clone(){
-        return new DistanceActivity(this);
     }
 
 }

@@ -56,12 +56,8 @@ public abstract class WeightActivity extends Activity {
     // Calculate calories method
     public double calculateCalories() {
 
-        double total = this.standardCalories() * ((double) (this.repetitions * this.sets * this.weight )); //Bodyweight should not have an impact on calories burned in these activities.
+        double total = this.caloriesFactor() * ((double) (this.repetitions * this.sets * this.weight)); 
         return total;
     }
 
-    //Clone
-    public WeightActivity clone(){
-        return new WeightActivity(this);
-    }
 }

@@ -43,13 +43,9 @@ public abstract class RepetitionActivity extends Activity {
     // Calculate calories method (per kg of bodyweight)
     public double calculateCalories() {
 
-        double total = this.standardCalories() * ((double) (this.getRepetitions() * this.getSets()));
+        double total = this.caloriesFactor() * ((double) (this.getRepetitions() * this.getSets()));
 
         return total;
     }
 
-    //Clone
-    public RepetitionActivity clone(){
-        return new RepetitionActivity(this);
-    }
 }

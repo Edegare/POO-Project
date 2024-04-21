@@ -5,7 +5,7 @@ public abstract class DistanceAltimetryActivity extends Activity {
     private double height; //kms
 
     //Constructors
-    public DistanceAltimetryActivity(double duration, int distance, int height) {
+    public DistanceAltimetryActivity(double duration, double distance, double height) {
         super(duration);
         this.distance = distance;
         this.height = height;
@@ -42,13 +42,9 @@ public abstract class DistanceAltimetryActivity extends Activity {
     // Calculate calories method
     public double calculateCalories() {
         
-        double total = this.standardCalories() * (this.distance + this.height);
+        double total = this.caloriesFactor() * (this.distance + this.height);
 
         return total;
     }
 
-    //Clone
-    public DistanceAltimetryActivity clone(){
-        return new DistanceAltimetryActivity(this);
-    }
 }

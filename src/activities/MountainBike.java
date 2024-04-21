@@ -2,27 +2,51 @@ package activities;
 
 public class MountainBike extends DistanceAltimetryActivity {
 
-    private static String name = "Mountain Bike";
-    private static double kcal = 1.5;
+    private final String name = "Mountain Bike";
+    private final double cal = 1.2;
 
-    public MountainBike(double duration, int distance, int height) {
+    //Constructors
+    public MountainBike(double duration, double distance, double height) {
         super(duration,distance,height);
     }
 
+    public MountainBike() {
+        super();
+    }
+
+    public MountainBike(MountainBike a) {
+        super(a);
+    }
+
+    //getters
     public String getName() {
-        return MountainBike.name;
+        return this.name;
     }
 
-    public double standardCalories() {
-        return MountainBike.kcal; //kcal per (km * weight)
+    public double caloriesFactor() {
+        return this.cal; 
     }
-
+    // Compare objects
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof MountainBike)) return false;
+        MountainBike u = (MountainBike) obj;
+        return this.getName().equals(u.getName()) &&
+               this.getDuration()==u.getDuration() &&
+               this.getDistance()==u.getDistance() &&
+               this.getHeight()==u.getHeight();
+    }
+    
     //ToString
     public String toString() {
         return "Mountain Biking {" +
                 "duration = " + getDuration() +
-                ", average heart rate = " + getHeartRate() +
                 ", distance = " + getDistance() + " Km" +
                 ", height = " + getHeight() + " Km}";
+    }
+
+    //Clone
+    public MountainBike clone() {
+        return new MountainBike(this);
     }
 }
