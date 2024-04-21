@@ -55,7 +55,7 @@ public class UserManager implements Serializable{
         return this.usersMap.containsKey(userId);
     }
 
-    // Get the number of users in the map
+    // Get the number of users
     public int getUserCount() {
         return this.usersMap.size();
     }
@@ -92,7 +92,7 @@ public class UserManager implements Serializable{
     //toString
     public String toString() {
         String allUsers = this.usersMap.values().stream()
-                .map(user->user.clone().toString())
+                .map(user->user.toString())
                 .collect(Collectors.joining("\n"));
     
         return "All Users Registered:\n" + allUsers;

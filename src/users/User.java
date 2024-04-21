@@ -1,6 +1,10 @@
 package users;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import activities.TrainSession;
 
 public abstract class User implements Serializable{
     private String id;
@@ -9,16 +13,16 @@ public abstract class User implements Serializable{
     private String email;
     private int heartRate; //BPM
     private int weight; //Kg
-    //private List<Activity> activities;
-    //private List<TrainSession> sessions; 
+    private List<TrainSession> sessions; 
 
-    public User(String id, String name, String address, String email, int heartRate, int weight) {
+    public User(String id, String name, String address, String email, int heartRate, int weight, List<TrainSession> sessions) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.email = email;
         this.heartRate = heartRate;
         this.weight = weight;
+        this.sessions = sessions.stream().map(t->t.clone()).toList();
     }
 
     public User(User u) {
@@ -28,6 +32,7 @@ public abstract class User implements Serializable{
         this.email = u.getEmail();
         this.heartRate = u.getHeartRate();
         this.weight = u.getWeight();
+        this.sessions = u.getSessions();
     }
 
     public User() {
@@ -37,6 +42,7 @@ public abstract class User implements Serializable{
         this.email = "";
         this.heartRate = 0;
         this.weight = 0;
+        this.sessions = new ArrayList<>();
     }
 
     //Getters & Setters
@@ -86,10 +92,24 @@ public abstract class User implements Serializable{
         this.weight = weight;
     }
 
+    public List<TrainSession> getSessions() {
+        return this.sessions.stream()
+               .map(t->t.clone()).toList();
+    }
+
     //Other methods
     //Calculate a heart rate factor to help calculate calories
     public double heartRateFactor() {
         return (1.0 + (double)heartRate * 0.01);
+    }
+
+    // Train Sessions list
+    public void addSession(TrainSession session) {
+        this.sessions.add(session);
+    }
+
+    public void removeSession(TrainSession session) {
+        this.sessions.remove(session);
     }
 
     // Compare objects
@@ -102,28 +122,13 @@ public abstract class User implements Serializable{
                 this.address.equals(u.address) &&
                 this.email.equals(u.email) &&
                 this.heartRate == u.heartRate &&
-                this.weight == u.weight;
+                this.weight == u.weight &&
+                this.sessions.equals(u.sessions);
     }
 
     // ToString 
-    public String toString() {
-        return "User with id '" + this.id + "\' {" +
-                "name='" + this.name + '\'' +
-                ", address='" + this.address + '\'' +
-                ", email='" + this.email + '\'' +
-                ", heartRate= " + this.heartRate + " BPM" + 
-                ", weight= " + this.weight + " Kg}";
-    }
-
-    public String toStringProfile() {
-        return "User Profile:\n" + 
-                "ID = '" + this.id + "\'\n" +
-                "Name = '" + this.name + "\'\n" +
-                "Address = '" + this.address + "\'\n" +
-                "Email = '" + this.email + "\'\n" +
-                "Average Heart Rate= " + this.heartRate + " BPM\n" +
-                "Weight= " + this.weight + " Kg";
-    }
+    public abstract String toString();
+    public abstract String toStringProfile() ;
 
     //Clone
     public abstract User clone();

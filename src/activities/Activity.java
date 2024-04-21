@@ -1,6 +1,8 @@
 package activities;
 
-public abstract class Activity {
+import java.io.Serializable;
+
+public abstract class Activity implements Serializable{
     private double duration; //Hours
 
 
@@ -39,5 +41,5 @@ public abstract class Activity {
     public abstract double calculateCalories();
 
     // Standart calories per hour of activity
-    public abstract double standardCalories();
+    public abstract double caloriesFactor();
 }
