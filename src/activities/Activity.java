@@ -30,14 +30,14 @@ public abstract class Activity {
     //public abstract boolean equals(Object obj);
 
     //Clone 
-    //public abstract Activity clone();
+    public abstract Activity clone();
 
     //ToString
-    //public abstract toString clone();
+    public abstract String toString();
 
     // Calculate calories method based on activity attributes
     public abstract double calculateCalories();
 
-    // Standart calories per hour fo activity
-    public abstract double standartCalories();
+    // Standart calories per hour of activity
+    public abstract double standardCalories();
 }

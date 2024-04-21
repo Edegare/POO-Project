@@ -5,19 +5,22 @@ public abstract class RepetitionActivity extends Activity {
     private int sets;
     
     //Constructors
-    public RepetitionActivity(double duration, int repetitions) {
+    public RepetitionActivity(double duration, int repetitions, int sets) {
         super(duration);
         this.repetitions = repetitions;
+        this.sets = sets;
     }
 
     public RepetitionActivity(RepetitionActivity activity) {
         super(activity);
         this.repetitions = activity.getRepetitions();
+        this.sets = activity.getSets();
     }
 
     public RepetitionActivity() {
         super();
         this.repetitions = 0;
+        this.sets = 0;
     }
 
     //Getters and Setters
@@ -37,12 +40,16 @@ public abstract class RepetitionActivity extends Activity {
         this.sets = sets;
     }
 
-    // Calculate calories method
+    // Calculate calories method (per kg of bodyweight)
     public double calculateCalories() {
 
-        double total = this.standartCalories() * ((double) (this.getRepetitions() * this.getSets()));
+        double total = this.standardCalories() * ((double) (this.getRepetitions() * this.getSets()));
 
         return total;
     }
 
+    //Clone
+    public RepetitionActivity clone(){
+        return new RepetitionActivity(this);
+    }
 }

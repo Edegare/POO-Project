@@ -42,8 +42,13 @@ public abstract class DistanceAltimetryActivity extends Activity {
     // Calculate calories method
     public double calculateCalories() {
         
-        double total = this.standartCalories() * (this.distance + this.height);
+        double total = this.standardCalories() * (this.distance + this.height);
 
         return total;
+    }
+
+    //Clone
+    public DistanceAltimetryActivity clone(){
+        return new DistanceAltimetryActivity(this);
     }
 }

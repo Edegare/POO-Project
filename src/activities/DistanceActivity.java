@@ -1,5 +1,7 @@
 package activities;
 
+import users.ProfessionalUser;
+
 public abstract class DistanceActivity extends Activity {
     private double distance; //Kms
 
@@ -31,9 +33,14 @@ public abstract class DistanceActivity extends Activity {
     // Calculate calories method
     public double calculateCalories() {
 
-        double total = this.standartCalories() * this.getDistance();
+        double total = this.standardCalories() * this.getDistance();
 
         return total;
+    }
+
+    //Clone
+    public DistanceActivity clone(){
+        return new DistanceActivity(this);
     }
 
 }
