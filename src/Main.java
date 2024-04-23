@@ -1,6 +1,7 @@
 import java.util.Scanner;
-//javac -d bin src/*.java src/users/*.java src/activities/*.java 
-//java -cp bin Main
+//inside repo with src tests and bin execute commands:
+// - javac -d bin src/*.java src/users/*.java src/activities/*.java 
+// - java -cp bin Main
 
 public class Main {
     public static void main(String[] args) throws Exception {

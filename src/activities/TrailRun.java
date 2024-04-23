@@ -1,6 +1,6 @@
 package activities;
 
-public class TrailRun extends DistanceAltimetryActivity {
+public class TrailRun extends DistanceAltimetryActivity implements Hard{
 
     private final static String DEFAULT_NAME = "Trail Run";
     private final double cal = 1.3;
