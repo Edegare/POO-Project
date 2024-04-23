@@ -6,8 +6,8 @@ public abstract class WeightActivity extends Activity {
     private int weight;
 
     //Constructors
-    public WeightActivity(double duration, int repetitions, int sets, int weight) {
-        super(duration);
+    public WeightActivity(String name, double duration, int repetitions, int sets, int weight) {
+        super(name, duration);
         this.repetitions = repetitions;
         this.sets = sets;
         this.weight = weight;

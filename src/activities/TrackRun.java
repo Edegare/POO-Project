@@ -2,12 +2,12 @@ package activities;
 
 public class TrackRun extends DistanceActivity {
 
-    private final String name = "Track Run";
+    private final static String DEFAULT_NAME = "Track Run";
     private final double cal = 1.0;
 
     //Constructors
     public TrackRun(double duration, double distance) {
-        super(duration,distance);
+        super(DEFAULT_NAME, duration,distance);
     }
 
     public TrackRun() {
@@ -19,9 +19,6 @@ public class TrackRun extends DistanceActivity {
     }
 
     //getters
-    public String getName() {
-        return this.name;
-    }
 
     public double caloriesFactor() {
         return this.cal; //cal per (km * weight)

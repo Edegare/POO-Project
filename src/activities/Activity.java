@@ -3,14 +3,15 @@ package activities;
 import java.io.Serializable;
 
 public abstract class Activity implements Serializable{
+    private String name;
     private double duration; //Hours
 
-
-    public Activity(double duration) {
+    public Activity(String name, double duration) {
         this.duration = duration;
     }
 
     public Activity(Activity a) {
+        this.name = a.getName();
         this.duration = a.getDuration();
     }
 
@@ -19,6 +20,13 @@ public abstract class Activity implements Serializable{
     }
 
     //Getters & Setters
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public double getDuration() {
         return this.duration;
