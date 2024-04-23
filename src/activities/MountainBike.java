@@ -1,6 +1,6 @@
 package activities;
 
-public class MountainBike extends DistanceAltimetryActivity {
+public class MountainBike extends DistanceAltimetryActivity implements Hard {
 
     private final static String DEFAULT_NAME = "Mountain Bike";
     private final double cal = 1.2;

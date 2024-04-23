@@ -36,6 +36,11 @@ public abstract class Activity implements Serializable{
         this.duration = duration;
     }
 
+    //Other methods
+    public boolean isHard() {
+        return this instanceof Hard;
+    }
+    
     //Equals 
     //public abstract boolean equals(Object obj);
 

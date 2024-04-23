@@ -103,13 +103,24 @@ public abstract class User implements Serializable{
         return (1.0 + (double)heartRate * 0.01);
     }
 
-    // Train Sessions list
+    // Add session
     public void addSession(TrainSession session) {
-        this.sessions.add(session);
+        this.sessions.add(session.clone());
     }
 
-    public void removeSession(TrainSession session) {
-        this.sessions.remove(session);
+    // Remove Session in index i
+    public void removeSession(int i) {
+        if (i >= 0 && i < this.sessions.size()) {
+            this.sessions.remove(i);
+        }
+    }
+
+    //Get the session in index i
+    public TrainSession getSession(int i) {
+        if (i >= 0 && i < this.sessions.size()) {
+            return this.sessions.get(i).clone();
+        }
+        else return new TrainSession();
     }
 
     // Compare objects
@@ -127,9 +138,22 @@ public abstract class User implements Serializable{
     }
 
     // ToString 
+    public String toStringSessions() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Train Sessions:\n");
+        
+        int i = 1;
+        for (TrainSession session : this.sessions) {
+            sb.append("Train Session ").append(i)
+              .append(" - Realization Date: ").append(session.getDate()).append("\n");
+            i++;
+        }
+        
+        return sb.toString();
+    }
+
     public abstract String toString();
     public abstract String toStringProfile() ;
-
     //Clone
     public abstract User clone();
     //Multiplier based on each type of user

@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.io.*;
+import java.time.LocalDate;
 
 import users.*;
 import activities.*;
@@ -11,10 +12,12 @@ public class Menu {
     private Scanner scanner;
     private UserManager userManager;
     private String usersFile = "data/users.ser";
+    private LocalDate date;
 
     public Menu(Scanner scanner) {
         this.scanner = scanner;
         this.userManager = new UserManager();
+        this.date = LocalDate.now();
     }
 
     //================= Main Menu =================
@@ -45,8 +48,10 @@ public class Menu {
 
             System.out.println("1. Register (Create new Account)");
             System.out.println("2. Login (Use an Account already registered)");
-            System.out.println("3. View all Users profiles registered");
-            System.out.println("4. Exit");
+            System.out.println("3. View all Users registered");
+            System.out.println("4. Users Best Stats");
+            System.out.println("5. Change Date");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
 
             // User choice
@@ -67,7 +72,7 @@ public class Menu {
                     System.out.println();
                     System.out.println(this.userManager.toString());
                     break; 
-                case 4:
+                case 6:
                     //save users
                     try {
                         userManager.saveUsers(usersFile);
@@ -85,7 +90,7 @@ public class Menu {
 
             System.out.println();
 
-        } while (choice != 4);
+        } while (choice != 6);
     }
  
     // ================= Register =================
@@ -241,6 +246,7 @@ public class Menu {
     // ================= User Menu after logging in =================
     private void userMenu(User user) {
         int choice;
+        int delete=2;
         
         do {
             // Display the User menu
@@ -253,6 +259,7 @@ public class Menu {
             System.out.println("4. Change my Average Heart Rate");
             System.out.println("5. Change my Weight");
             System.out.println("6. My Train Sessions");
+            System.out.println("7. Delete Account");
             System.out.println("10. Exit to Menu");
             System.out.print("Enter your choice: ");
 
@@ -326,6 +333,72 @@ public class Menu {
                     this.userManager.updateUser(user);
                     break;   
                 case 6:
+                    userActivitiesMenu(user);
+                    break;
+                case 7:
+                    System.out.println("Do You really want to delete this account?");
+                    System.out.println("1. Yes");
+                    System.out.println("2. No");
+                    delete = this.scanner.nextInt();
+                    this.scanner.nextLine(); 
+                    if (delete==1) this.userManager.removeUser(user.getId());
+                    break;
+                case 10:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+            System.out.println();
+
+        } while (choice != 10 && delete !=1);
+    }
+
+    // ================= User My Train Sessions Menu =================
+    private void userActivitiesMenu(User user) {
+        int choice;
+        
+        do {
+            // Display the User menu
+            System.out.println(); 
+            System.out.println("===== My Train Sessions =====");
+            System.out.println(user.toStringSessions());
+            System.out.println("1. Add Train Session");
+            System.out.println("2. Choose a Session");
+            System.out.println("3. All Activities");
+            System.out.println("10. Exit to Menu");
+            System.out.print("Enter your choice: ");
+
+            // User choice
+            choice = this.scanner.nextInt();
+            this.scanner.nextLine(); 
+            
+            System.out.println();
+
+            // Options 
+            switch (choice) {
+                case 1:
+                    
+                    break;
+                case 2:
+                   
+                    break;   
+                case 3:
+
+
+                    break; 
+                case 4:
+                   
+                    break; 
+                case 5:
+                    
+                    break;   
+                case 6:
+                    
+                    break;
+                case 7:
+                    
                     break;
                 case 10:
                     System.out.println("Exiting...");

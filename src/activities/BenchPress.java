@@ -1,6 +1,6 @@
 package activities;
 
-public class BenchPress extends WeightActivity{
+public class BenchPress extends WeightActivity implements Hard{
 
     private final static String DEFAULT_NAME = "Bench Press";
     private final double cal = 0.005;
