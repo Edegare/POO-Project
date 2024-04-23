@@ -2,12 +2,12 @@ package activities;
 
 public class BenchPress extends WeightActivity{
 
-    private final String name = "Bench Press";
+    private final static String DEFAULT_NAME = "Bench Press";
     private final double cal = 0.005;
 
     //Constructors
     public BenchPress(double duration, int repetitions, int sets, int weight) {
-        super(duration,repetitions,sets,weight);
+        super(DEFAULT_NAME, duration,repetitions,sets,weight);
     }
 
     public BenchPress(BenchPress a) {
@@ -19,9 +19,6 @@ public class BenchPress extends WeightActivity{
     }
 
     //getters
-    public String getName() {
-        return this.name;
-    }
 
     public double caloriesFactor() {
         return this.cal; 

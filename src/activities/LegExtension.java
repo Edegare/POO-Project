@@ -2,12 +2,12 @@ package activities;
 
 public class LegExtension extends WeightActivity{
 
-    private final String name = "Leg Extension";
+    private final static String DEFAULT_NAME = "Leg Extension";
     private final double cal = 0.002;
 
     //Constructors
     public LegExtension(double duration, int repetitions, int sets, int weight) {
-        super(duration,repetitions,sets,weight);
+        super(DEFAULT_NAME, duration,repetitions,sets,weight);
     }
     
     public LegExtension() {
@@ -19,9 +19,6 @@ public class LegExtension extends WeightActivity{
     }
 
     //getters
-    public String getName() {
-        return this.name;
-    }
 
     public double caloriesFactor() {
         return this.cal; 

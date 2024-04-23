@@ -2,12 +2,12 @@ package activities;
 
 public class Canoe extends DistanceActivity {
 
-    private final String name = "Canoe";
+    private final static String DEFAULT_NAME = "Canoe";
     private final double cal = 0.9;
 
     //Constructors
     public Canoe(double duration, double distance) {
-        super(duration,distance);
+        super(DEFAULT_NAME, duration,distance);
     }
 
     public Canoe() {
@@ -19,9 +19,6 @@ public class Canoe extends DistanceActivity {
     }
 
     //getters
-    public String getName() {
-        return this.name;
-    }
 
     public double caloriesFactor() {
         return this.cal; 

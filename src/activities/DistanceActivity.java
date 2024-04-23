@@ -5,8 +5,8 @@ public abstract class DistanceActivity extends Activity {
     private double distance; //Kms
 
     //Constructors
-    public DistanceActivity(double duration, double distance) {
-        super(duration);
+    public DistanceActivity(String name, double duration, double distance) {
+        super(name, duration);
         this.distance = distance;
     }
 

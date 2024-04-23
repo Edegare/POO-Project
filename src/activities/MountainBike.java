@@ -2,12 +2,12 @@ package activities;
 
 public class MountainBike extends DistanceAltimetryActivity {
 
-    private final String name = "Mountain Bike";
+    private final static String DEFAULT_NAME = "Mountain Bike";
     private final double cal = 1.2;
 
     //Constructors
     public MountainBike(double duration, double distance, double height) {
-        super(duration,distance,height);
+        super(DEFAULT_NAME, duration,distance,height);
     }
 
     public MountainBike() {
@@ -19,10 +19,6 @@ public class MountainBike extends DistanceAltimetryActivity {
     }
 
     //getters
-    public String getName() {
-        return this.name;
-    }
-
     public double caloriesFactor() {
         return this.cal; 
     }

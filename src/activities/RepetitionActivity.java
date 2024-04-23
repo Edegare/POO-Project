@@ -5,8 +5,8 @@ public abstract class RepetitionActivity extends Activity {
     private int sets;
     
     //Constructors
-    public RepetitionActivity(double duration, int repetitions, int sets) {
-        super(duration);
+    public RepetitionActivity(String name, double duration, int repetitions, int sets) {
+        super(name, duration);
         this.repetitions = repetitions;
         this.sets = sets;
     }

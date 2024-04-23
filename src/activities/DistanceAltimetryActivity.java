@@ -5,8 +5,8 @@ public abstract class DistanceAltimetryActivity extends Activity {
     private double height; //kms
 
     //Constructors
-    public DistanceAltimetryActivity(double duration, double distance, double height) {
-        super(duration);
+    public DistanceAltimetryActivity(String name, double duration, double distance, double height) {
+        super(name,duration);
         this.distance = distance;
         this.height = height;
     }

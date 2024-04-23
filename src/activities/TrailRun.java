@@ -2,12 +2,12 @@ package activities;
 
 public class TrailRun extends DistanceAltimetryActivity {
 
-    private final String name = "Trail Run";
+    private final static String DEFAULT_NAME = "Trail Run";
     private final double cal = 1.3;
 
     //Constructors
     public TrailRun(double duration, double distance, double height) {
-        super(duration,distance, height);
+        super(DEFAULT_NAME, duration,distance, height);
     }
 
     public TrailRun() {
@@ -19,9 +19,6 @@ public class TrailRun extends DistanceAltimetryActivity {
     }
 
     //getters
-    public String getName() {
-        return this.name;
-    }
 
     public double caloriesFactor() {
         return this.cal; //cal per (km * weight)

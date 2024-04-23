@@ -2,12 +2,12 @@ package activities;
 
 public class SitUps extends RepetitionActivity{
 
-    private final String name = "Sit Ups";
+    private final static String DEFAULT_NAME = "Sit Ups";
     private final double cal = 0.09;
 
     //Constructors
     public SitUps(double duration, int repetitions, int set) {
-        super(duration,repetitions, set);
+        super(DEFAULT_NAME,duration,repetitions, set);
     }
 
     public SitUps() {
@@ -19,9 +19,6 @@ public class SitUps extends RepetitionActivity{
     }
     
     //getters
-    public String getName() {
-        return this.name;
-    }
 
     public double caloriesFactor() {
         return this.cal; 
