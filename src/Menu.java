@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import users.*;
 import activities.*;
@@ -49,7 +50,7 @@ public class Menu {
             System.out.println("1. Register (Create new Account)");
             System.out.println("2. Login (Use an Account already registered)");
             System.out.println("3. View all Users registered");
-            System.out.println("4. Users Best Stats");
+            System.out.println("4. Some Users Stats");
             System.out.println("5. Change Date");
             System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
@@ -101,7 +102,7 @@ public class Menu {
         String newEmail;
         int newHeartRate=0;
         int newWeight=0;
-        List<TrainSession> newSession = new ArrayList<>();
+        List<TrainSession> newSessions = new ArrayList<>();
         
         int choice;
 
@@ -185,13 +186,13 @@ public class Menu {
         
             switch (choice) {
                 case 1:
-                    newUser = new ProfessionalUser(newId, newName, newAddress, newEmail, newHeartRate, newWeight, newSession);
+                    newUser = new ProfessionalUser(newId, newName, newAddress, newEmail, newHeartRate, newWeight, newSessions);
                     break;
                 case 2:
-                    newUser = new AmateurUser(newId, newName, newAddress, newEmail, newHeartRate, newWeight, newSession);
+                    newUser = new AmateurUser(newId, newName, newAddress, newEmail, newHeartRate, newWeight, newSessions);
                     break;
                 case 3:
-                    newUser = new OccasionalUser(newId, newName, newAddress, newEmail, newHeartRate, newWeight, newSession);
+                    newUser = new OccasionalUser(newId, newName, newAddress, newEmail, newHeartRate, newWeight, newSessions);
                     break;
                 case 4:
                     System.out.println("Exiting...");
@@ -341,7 +342,11 @@ public class Menu {
                     System.out.println("2. No");
                     delete = this.scanner.nextInt();
                     this.scanner.nextLine(); 
-                    if (delete==1) this.userManager.removeUser(user.getId());
+                    if (delete==1) {
+                        this.userManager.removeUser(user.getId());
+                        System.out.println("User deleted!");
+                    }
+                    else System.out.println("User not Deleted!");
                     break;
                 case 10:
                     System.out.println("Exiting...");
@@ -360,13 +365,15 @@ public class Menu {
         int choice;
         
         do {
-            // Display the User menu
+            // Display the Train Sessions menu
             System.out.println(); 
             System.out.println("===== My Train Sessions =====");
             System.out.println(user.toStringSessions());
-            System.out.println("1. Add Train Session");
-            System.out.println("2. Choose a Session");
-            System.out.println("3. All Activities");
+            System.out.println("1. My User Training Stats");
+            System.out.println("2. My Activities");
+            System.out.println("3. Create new Train Session");
+            System.out.println("4. Delete a Train Session");
+            System.out.println("5. All My Activities");
             System.out.println("10. Exit to Menu");
             System.out.print("Enter your choice: ");
 
@@ -382,10 +389,9 @@ public class Menu {
                     
                     break;
                 case 2:
-                   
+                    System.out.println(user.toStringActivities());
                     break;   
                 case 3:
-
 
                     break; 
                 case 4:
@@ -398,7 +404,24 @@ public class Menu {
                     
                     break;
                 case 7:
-                    
+                    int delete = 0;
+                    int session = 0;
+                    System.out.println(user.toStringSessions());
+                    System.out.println("Choose a Session to Delete: ");
+                    delete = this.scanner.nextInt();
+                    this.scanner.nextLine();
+                    if (session > 0 && session < user.countSessions()) { 
+                        System.out.println("Do You really want to delete this session?");
+                        System.out.println("1. Yes");
+                        System.out.println("2. No");
+                        delete = this.scanner.nextInt();
+                        this.scanner.nextLine(); 
+                        if (delete==1) {
+                            user.removeSession(session-1);
+                            System.out.println("Train Session Deleted!");
+                        }
+                    }
+                    else System.out.println("Train Session not Deleted!");
                     break;
                 case 10:
                     System.out.println("Exiting...");
@@ -411,4 +434,58 @@ public class Menu {
 
         } while (choice != 10);
     }
+
+    // ================= User My Train Sessions Menu =================
+    private void createTrainSession(User u) {
+        TrainSession newSession =  new TrainSession();
+        
+        int choice;
+        int maxActivities=1;
+
+        System.out.println("== Create a new Train Session ==");
+
+        System.out.println("Write a date with format yyyy-MM-dd:");
+        String input = scanner.nextLine();
+        
+        try {
+            LocalDate date = LocalDate.parse(input);
+            System.out.println("Data lida: " + date);
+        } catch (DateTimeParseException e) {
+            System.out.println("Format incorrect. Use the format yyyy-MM-dd.");
+            return;
+        }
+        
+        System.out.println();
+        do {
+
+            System.out.println("== Create a new Train Session ==");
+            System.out.println("1. Add new Activity to this Training" + (maxActivities-1) + " of " + maxActivities + "in this Training");
+            System.out.println("2. Test Training Session");
+            System.out.println("3. Save and Exit");
+            System.out.println("4. Exit without Saving");
+            System.out.println();
+            // User choice
+            choice = this.scanner.nextInt();
+            this.scanner.nextLine(); 
+            
+            System.out.println();
+
+            // Options 
+            switch (choice) {
+                case 1:
+                    if (maxActivities==4) System.out.println("Can't insert more Activities!");
+                    break;
+                case 10:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+            System.out.println();
+
+        } while (choice != 10);
+        
+    } 
 }
+
