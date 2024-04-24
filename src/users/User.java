@@ -1,9 +1,11 @@
 package users;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import activities.Activity;
 import activities.TrainSession;
 
 public abstract class User implements Serializable{
@@ -103,6 +105,53 @@ public abstract class User implements Serializable{
         return (1.0 + (double)heartRate * 0.01);
     }
 
+
+    // Calculate total calories of an user till a date
+    public double calcUserTotalCalories(LocalDate date) {
+        double totalCalories = 0.0;
+
+
+        for (TrainSession session : sessions) {
+ 
+            LocalDate sessionDate = session.getDate();
+
+
+            if (!sessionDate.isAfter(date)) {
+                double sessionCalories = session.calcSessionCalories();
+                totalCalories += sessionCalories;
+            }
+        }
+
+        return totalCalories;
+    }
+
+
+    //Calculate a Train Session with index i expected Calories
+    public double calcSessionCalories(int i) {
+        if (i<0 || i>=this.countSessions()) return -1;
+
+        TrainSession mySession = getSession(i);
+        double userFactor = this.multiplierCaloriesTypeUser();
+        double sessionFactor = mySession.calcSessionCalories();
+
+        double total = userFactor * sessionFactor;
+
+        return total;
+    }
+    
+    //Calculate an Activity with index i expected Calories
+    public double calcActivityCalories (TrainSession session, int i) {
+        if (i>=session.getActivitiesCount()||i<0) return -1;
+
+        double activityFactor = session.getActivityCaloriesFactor(i); 
+        double userFactor = this.multiplierCaloriesTypeUser();
+        
+
+        double total = userFactor * activityFactor;
+
+        return total;
+    }
+
     // Add session
     public void addSession(TrainSession session) {
         this.sessions.add(session.clone());
@@ -120,7 +169,12 @@ public abstract class User implements Serializable{
         if (i >= 0 && i < this.sessions.size()) {
             return this.sessions.get(i).clone();
         }
-        else return new TrainSession();
+        else return null;
+    }
+
+    // Get number of sessions of an user
+    public int countSessions () {
+        return this.sessions.size();
     }
 
     // Compare objects
@@ -141,14 +195,41 @@ public abstract class User implements Serializable{
     public String toStringSessions() {
         StringBuilder sb = new StringBuilder();
         sb.append("Train Sessions:\n");
-        
-        int i = 1;
-        for (TrainSession session : this.sessions) {
-            sb.append("Train Session ").append(i)
-              .append(" - Realization Date: ").append(session.getDate()).append("\n");
-            i++;
+        if (this.sessions.isEmpty()) {
+            sb.append("No activities recorded.\n");
+        }
+        else {
+            int i = 1;
+            for (TrainSession session : this.sessions) {
+                sb.append("Train Session ").append(i)
+                .append(" - Realization Date: ").append(session.getDate()).append("- Expected Calories: ").append(this.calcSessionCalories(i-1)).append("\n");
+                i++;
+            }
         }
         
+        return sb.toString();
+    }
+
+    public String toStringActivities() {
+        StringBuilder sb = new StringBuilder();
+        if (this.sessions.isEmpty()) {
+            sb.append("No activities recorded.\n");
+        }
+        else {
+            sb.append("All Activities:\n");
+            
+            int i = 1;
+            for (TrainSession session : this.sessions) {
+                sb.append("Train Session ").append(i).append(" - Realization Date: ").append(session.getDate()).append("\n");
+                int j = 1;
+                for (Activity activity : session.getActivitiesList()) {
+                    double calories = calcActivityCalories(session, j - 1);
+                    sb.append("\tActivity ").append(j).append(": ").append(activity.toString()).append(" - Expected Calories: ").append(calories).append("\n");
+                    j++;
+                }
+                i++;
+            }
+        }
         return sb.toString();
     }
 

@@ -1,6 +1,7 @@
 package users;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -72,6 +73,24 @@ public class UserManager implements Serializable{
         }
     }
 
+    // Get user with most calories consumed till a date
+    public User mostCaloriesUser(LocalDate date) {
+        User mostCaloriesUser = null;
+        double maxCalories = Double.MIN_VALUE;
+
+
+        for (User user : usersMap.values()) {
+            double totalCalories = user.calcUserTotalCalories(date);
+
+            if (totalCalories > maxCalories) {
+                maxCalories = totalCalories;
+                mostCaloriesUser = user;
+            }
+        }
+        return mostCaloriesUser;
+    }
+
+    
     // Serialization (Save and load users)
     public void saveUsers(String path) throws IOException {
         try (FileOutputStream fileOut = new FileOutputStream(path);

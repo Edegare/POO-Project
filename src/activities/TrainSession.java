@@ -58,30 +58,50 @@ public class TrainSession implements Serializable{
         }
     }
 
+    // Get activity with index i 
+    public Activity getActivity(int i) {
+        if (i >= 0 && i < this.activitiesList.size()) {
+            return this.activitiesList.get(i).clone();
+        }
+        else return null;
+    }
+
     //Get number of activities
     public int getActivitiesCount() {
         return this.activitiesList.size();
     }
 
     //Calculate calories of a train session
-    public double CalcSessionCalories() {
+    public double calcSessionCalories() {
         return this.activitiesList.stream()
                          .mapToDouble(a->a.calculateCalories())
                          .sum();
     } 
     
+    //Calculate calories of an activity of index i
+    public double getActivityCaloriesFactor(int i) {
+        if (i<0 || i>=this.getActivitiesCount()) return -1;
+
+        Activity activity = this.getActivity(i);
+        double activityFactor = activity.calculateCalories();
+
+        return activityFactor;
+    }
+
     //ToString
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        int i = 1; 
-
-        sb.append("Train Session Date: ").append(this.date).append("\n");
-        sb.append("All Activities of the Train Session:\n");
         
-        for (Activity a : this.activitiesList) {
-            sb.append(i).append(". "); 
-            sb.append(a.toString()).append("\n"); 
-            i++; 
+        if (!(this.activitiesList.isEmpty())) {
+            int i = 1; 
+            sb.append("Train Session Date: ").append(this.date).append("\n");
+            sb.append("All Activities of the Train Session:\n");
+            
+            for (Activity a : this.activitiesList) {
+                sb.append(i).append(". "); 
+                sb.append(a.toString()).append("\n"); 
+                i++; 
+            }
         }
         return sb.toString();
     }
