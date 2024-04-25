@@ -14,17 +14,29 @@ public class Menu {
     private UserManager userManager;
     private String usersFile = "data/users.ser";
     private LocalDate date;
+    private List<Activity> definedActivities;
+
 
     public Menu(Scanner scanner) {
         this.scanner = scanner;
         this.userManager = new UserManager();
         this.date = LocalDate.now();
+        this.definedActivities = new ArrayList<>();
+
+        definedActivities.add(new BenchPress(0, 0, 0, 0));     
+        definedActivities.add(new Canoe(0, 0));              
+        definedActivities.add(new LegExtension(0, 0, 0, 0));   
+        definedActivities.add(new TrackRun(0, 0));            
+        definedActivities.add(new TrailRun(0, 0, 0));        
+        definedActivities.add(new SitUps(0, 0, 0));             
+        definedActivities.add(new PushUps(0, 0, 0));             
+        definedActivities.add(new MountainBike(0, 0, 0)); 
     }
 
     //================= Main Menu =================
     public void displayMainMenu() throws IOException {
         int choice;
-
+        
 
         //load users
         File file = new File(usersFile);
@@ -261,7 +273,7 @@ public class Menu {
             System.out.println("5. Change my Weight");
             System.out.println("6. My Train Sessions");
             System.out.println("7. Delete Account");
-            System.out.println("10. Exit to Menu");
+            System.out.println("8. Exit to Menu");
             System.out.print("Enter your choice: ");
 
             // User choice
@@ -335,6 +347,7 @@ public class Menu {
                     break;   
                 case 6:
                     userActivitiesMenu(user);
+                    this.userManager.updateUser(user);
                     break;
                 case 7:
                     System.out.println("Do You really want to delete this account?");
@@ -348,7 +361,7 @@ public class Menu {
                     }
                     else System.out.println("User not Deleted!");
                     break;
-                case 10:
+                case 8:
                     System.out.println("Exiting...");
                     break;
                 default:
@@ -357,7 +370,7 @@ public class Menu {
             }
             System.out.println();
 
-        } while (choice != 10 && delete !=1);
+        } while (choice != 8 && delete != 1);
     }
 
     // ================= User My Train Sessions Menu =================
@@ -373,8 +386,7 @@ public class Menu {
             System.out.println("2. My Activities");
             System.out.println("3. Create new Train Session");
             System.out.println("4. Delete a Train Session");
-            System.out.println("5. All My Activities");
-            System.out.println("10. Exit to Menu");
+            System.out.println("5. Exit to Menu");
             System.out.print("Enter your choice: ");
 
             // User choice
@@ -386,24 +398,20 @@ public class Menu {
             // Options 
             switch (choice) {
                 case 1:
-                    
+                    System.out.println("== My Stats ==");
+                    System.out.println("Today's Date: " + this.date);
+                    System.out.println("My most practiced Activity: " + user.getNameMostPracticedActivity(this.date));
+                    System.out.println("My consumed Calories: " + user.calcUserTotalCalories(this.date));
+                    System.out.println("My Total Traveled Km's: " + user.getTotalDistance(this.date));
+                    System.out.println("My Total Meters of Altimetry: " + user.getTotalHeightMeters(this.date));
                     break;
                 case 2:
                     System.out.println(user.toStringActivities());
                     break;   
                 case 3:
-
+                    createTrainSession(user);
                     break; 
                 case 4:
-                   
-                    break; 
-                case 5:
-                    
-                    break;   
-                case 6:
-                    
-                    break;
-                case 7:
                     int delete = 0;
                     int session = 0;
                     System.out.println(user.toStringSessions());
@@ -420,10 +428,12 @@ public class Menu {
                             user.removeSession(session-1);
                             System.out.println("Train Session Deleted!");
                         }
+                        else System.out.println("Train Session not Deleted!");
                     }
-                    else System.out.println("Train Session not Deleted!");
-                    break;
-                case 10:
+                    else System.out.println("No modifications done!");
+
+                    break; 
+                case 5:
                     System.out.println("Exiting...");
                     break;
                 default:
@@ -432,38 +442,39 @@ public class Menu {
             }
             System.out.println();
 
-        } while (choice != 10);
+        } while (choice != 5);
     }
 
-    // ================= User My Train Sessions Menu =================
+    // ================= Create train Session Menu =================
     private void createTrainSession(User u) {
         TrainSession newSession =  new TrainSession();
-        
+
         int choice;
-        int maxActivities=1;
+        int nActivities=0;
 
         System.out.println("== Create a new Train Session ==");
 
-        System.out.println("Write a date with format yyyy-MM-dd:");
-        String input = scanner.nextLine();
+        System.out.println("Write a date with format yyyy-MM-dd: ");
+        String input = this.scanner.nextLine();
         
         try {
-            LocalDate date = LocalDate.parse(input);
-            System.out.println("Data lida: " + date);
+            LocalDate sessionDate = LocalDate.parse(input);
+            newSession.setSessionDate(sessionDate);
+            System.out.println("Your Train Session Date: " + newSession.getDate());
         } catch (DateTimeParseException e) {
             System.out.println("Format incorrect. Use the format yyyy-MM-dd.");
             return;
         }
-        
+
         System.out.println();
         do {
-
+            int erro=0;
             System.out.println("== Create a new Train Session ==");
-            System.out.println("1. Add new Activity to this Training" + (maxActivities-1) + " of " + maxActivities + "in this Training");
-            System.out.println("2. Test Training Session");
+            System.out.println("1. Add new Activity to this Training! " + (nActivities) + " of 3 Activities in this Training");
+            System.out.println("2. See Training Session Stats");
             System.out.println("3. Save and Exit");
             System.out.println("4. Exit without Saving");
-            System.out.println();
+            System.out.println("Enter your choice: ");
             // User choice
             choice = this.scanner.nextInt();
             this.scanner.nextLine(); 
@@ -473,9 +484,107 @@ public class Menu {
             // Options 
             switch (choice) {
                 case 1:
-                    if (maxActivities==4) System.out.println("Can't insert more Activities!");
+                    if (nActivities==3) System.out.println("Can't insert more Activities!");
+                    else {
+                        //List all activities
+                        System.out.println("List of activities to add: ");
+                        StringBuilder sb = new StringBuilder();
+                        int i = 1;
+
+                        for (Activity activity : this.definedActivities) {
+                            sb.append(i + ". ").append(activity.getName());
+                            if (activity.isHard()) {
+                                sb.append(" - Hard\n");
+                            }
+                            else sb.append(" - Normal\n");
+                            i++;
+                        }
+
+                        System.out.println(sb);
+                        System.out.println("Enter your choice: ");
+                        
+                        // User choice
+                        int choice2 = this.scanner.nextInt();
+                        this.scanner.nextLine();
+
+                        if (choice2>0 && choice2<i) {
+                            double duration;
+                            Activity activityToAdd = this.definedActivities.get(choice2-1).clone();
+
+                            System.out.println("Write your activity duration in Hours: ");
+                            duration = this.scanner.nextDouble();
+                            this.scanner.nextLine();
+
+                            // Create new activity based on type
+                            if (activityToAdd.isDistanceActivity()) {
+                                System.out.println("Write your activity distance in Km's: ");
+                                double distance = this.scanner.nextDouble();
+                                this.scanner.nextLine();
+
+                                if (activityToAdd.getName().equals("Track Run")) activityToAdd = new TrackRun(duration, distance);
+                                else if (activityToAdd.getName().equals("Canoe")) activityToAdd = new Canoe(duration, distance);
+                                else {System.out.println("Error adding new Activity"); erro++;};
+                            }
+                            else if (activityToAdd.isRepetitionActivity()) {
+                                System.out.println("Write your activity number of repetitions per set: ");
+                                int reps= this.scanner.nextInt();
+                                this.scanner.nextLine();
+                                System.out.println("Write your activity number of sets: ");
+                                int sets= this.scanner.nextInt();
+                                this.scanner.nextLine();
+
+                                if (activityToAdd.getName().equals("Sit Ups")) activityToAdd = new SitUps(duration, reps,sets);
+                                else if (activityToAdd.getName().equals("Push Ups")) activityToAdd = new PushUps(duration, reps,sets);
+                                else {System.out.println("Error adding new Activity"); erro++;};
+                            }
+                            else if (activityToAdd.isWeightActivity()) {
+                                System.out.println("Write your activity number of repetitions per set: ");
+                                int reps= this.scanner.nextInt();
+                                this.scanner.nextLine();
+                                System.out.println("Write your activity number of sets: ");
+                                int sets= this.scanner.nextInt();
+                                this.scanner.nextLine();
+                                System.out.println("Write your activity total Weight in Kgs: ");
+                                int wgt = this.scanner.nextInt();
+                                this.scanner.nextLine();
+
+                                if (activityToAdd.getName().equals("Leg Extension")) activityToAdd = new LegExtension(duration, reps,sets,wgt);
+                                else if (activityToAdd.getName().equals("Bench Press")) activityToAdd = new BenchPress(duration, reps,sets,wgt);
+                                else {System.out.println("Error adding new Activity");erro++;};
+                            }
+                            else if (activityToAdd.isDistanceAltimetryActivity()) {                                
+                                System.out.println("Write your activity distance in Km's: ");
+                                double distance = this.scanner.nextDouble();
+                                this.scanner.nextLine();
+                                System.out.println("Write your activity height in Km's: ");
+                                double height = this.scanner.nextDouble();
+                                this.scanner.nextLine();
+
+                                if (activityToAdd.getName().equals("Trail Run")) activityToAdd = new TrailRun(duration, distance, height);
+                                else if (activityToAdd.getName().equals("Mountain Bike")) activityToAdd = new MountainBike(duration, distance, height);
+                                else {System.out.println("Error adding new Activity");erro++;};
+                            }
+                            if (erro==0) { 
+                                newSession.addActivity(activityToAdd);
+                                nActivities++;
+                            }
+                        }
+                        else System.out.println("Invalid choice!");
+                    }
                     break;
-                case 10:
+                
+                case 2: 
+                    System.out.println(newSession.toString());
+                    double totalCalories = u.multiplierCaloriesTypeUser() * newSession.calcSessionCalories();
+                    System.out.println("\nSession total Calories -> " + (int)totalCalories);
+                    break;
+                case 3:
+                    if (newSession.getActivitiesCount()>0) {
+                        u.addSession(newSession);
+                    }
+                    System.out.println("Saving and Exiting...");
+                    break;
+                case 4:
                     System.out.println("Exiting...");
                     break;
                 default:
@@ -484,7 +593,7 @@ public class Menu {
             }
             System.out.println();
 
-        } while (choice != 10);
+        } while (choice != 4 && choice !=3);
         
     } 
 }

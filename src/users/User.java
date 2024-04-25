@@ -3,9 +3,14 @@ package users;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import activities.Activity;
+import activities.DistanceActivity;
+import activities.DistanceAltimetryActivity;
 import activities.TrainSession;
 
 public abstract class User implements Serializable{
@@ -24,7 +29,7 @@ public abstract class User implements Serializable{
         this.email = email;
         this.heartRate = heartRate;
         this.weight = weight;
-        this.sessions = sessions.stream().map(t->t.clone()).toList();
+        this.sessions = sessions.stream().map(t->t.clone()).collect(Collectors.toList());
     }
 
     public User(User u) {
@@ -96,18 +101,25 @@ public abstract class User implements Serializable{
 
     public List<TrainSession> getSessions() {
         return this.sessions.stream()
-               .map(t->t.clone()).toList();
+               .map(t->t.clone()).collect(Collectors.toList());
+    }
+
+    public void setSessions(List<TrainSession> tSessions) {
+        this.sessions = new ArrayList<>();
+        for(TrainSession ts : tSessions) {
+            this.sessions.add(ts.clone());
+        }
     }
 
     //Other methods
     //Calculate a heart rate factor to help calculate calories
     public double heartRateFactor() {
-        return (1.0 + (double)heartRate * 0.01);
+        return (1.0 + (double)heartRate * 0.005);
     }
 
 
     // Calculate total calories of an user till a date
-    public double calcUserTotalCalories(LocalDate date) {
+    public int calcUserTotalCalories(LocalDate date) {
         double totalCalories = 0.0;
 
 
@@ -117,17 +129,17 @@ public abstract class User implements Serializable{
 
 
             if (!sessionDate.isAfter(date)) {
-                double sessionCalories = session.calcSessionCalories();
+                double sessionCalories = session.calcSessionCalories() * this.multiplierCaloriesTypeUser();
                 totalCalories += sessionCalories;
             }
         }
 
-        return totalCalories;
+        return (int)totalCalories;
     }
 
 
     //Calculate a Train Session with index i expected Calories
-    public double calcSessionCalories(int i) {
+    public int calcSessionCalories(int i) {
         if (i<0 || i>=this.countSessions()) return -1;
 
         TrainSession mySession = getSession(i);
@@ -136,11 +148,11 @@ public abstract class User implements Serializable{
 
         double total = userFactor * sessionFactor;
 
-        return total;
+        return (int) total;
     }
     
     //Calculate an Activity with index i expected Calories
-    public double calcActivityCalories (TrainSession session, int i) {
+    public int calcActivityCalories (TrainSession session, int i) {
         if (i>=session.getActivitiesCount()||i<0) return -1;
 
         double activityFactor = session.getActivityCaloriesFactor(i); 
@@ -149,8 +161,81 @@ public abstract class User implements Serializable{
 
         double total = userFactor * activityFactor;
 
-        return total;
+        return (int)total;
     }
+
+    // Get User Altimetry meters
+    public int getTotalHeightMeters(LocalDate date) {
+
+        double total = 0;
+
+        for (TrainSession session : this.sessions) {
+            if (!(session.getDate().isAfter(date))) {
+                for (Activity activity : session.getActivitiesList()) {
+                    if (activity.isDistanceAltimetryActivity()) {
+                        DistanceAltimetryActivity altActivity = (DistanceAltimetryActivity) activity;
+                        total += altActivity.getHeight();
+                    }
+                }
+            }
+        }
+        //transform to meters
+        total *= 100; 
+        return (int)total;
+    }
+
+    // Get User Kms done
+    public int getTotalDistance(LocalDate date) {
+
+        double total = 0;
+        for (TrainSession session : this.sessions) {
+            if (!(session.getDate().isAfter(date))) {
+                for (Activity activity : session.getActivitiesList()) {
+                    if (activity.isDistanceAltimetryActivity()) {
+                        DistanceAltimetryActivity altActivity = (DistanceAltimetryActivity) activity;
+                        total += altActivity.getDistance() + altActivity.getHeight();
+                    }
+                    else if (activity.isDistanceActivity()) {
+                        DistanceActivity altActivity = (DistanceActivity) activity;
+                        total += altActivity.getDistance();
+                    }
+                }
+            }
+        }
+        return (int)total;
+    }
+
+    // Get the name of the most practiced activity
+    public String getNameMostPracticedActivity(LocalDate date) {
+        Map<String, Integer> activityCount = new HashMap<>();
+
+
+        for (TrainSession session : sessions) {
+            if (!(session.getDate().isAfter(date))) {
+                for (Activity activity : session.getActivitiesList()) {
+                    String activityName = activity.getName();
+                    if (activityCount.containsKey(activityName)) {
+                        activityCount.put(activityName, activityCount.get(activityName) + 1);
+                    } else {
+                        activityCount.put(activityName, 1);
+                    }
+                }
+            }
+        }
+        String mostPracticedActivity = null;
+        int maxCount = 0;
+
+        for (Map.Entry<String, Integer> e : activityCount.entrySet()) {
+            String activityName = e.getKey();
+            int count = e.getValue();
+            if (count > maxCount) {
+                mostPracticedActivity = activityName;
+                maxCount = count;
+            }
+        }
+        return mostPracticedActivity;
+    }
+
 
     // Add session
     public void addSession(TrainSession session) {
@@ -202,7 +287,7 @@ public abstract class User implements Serializable{
             int i = 1;
             for (TrainSession session : this.sessions) {
                 sb.append("Train Session ").append(i)
-                .append(" - Realization Date: ").append(session.getDate()).append("- Expected Calories: ").append(this.calcSessionCalories(i-1)).append("\n");
+                .append(" - Realization Date: ").append(session.getDate()).append(" - Total Expected Calories: ").append((int)this.calcSessionCalories(i-1)).append("\n");
                 i++;
             }
         }
@@ -220,11 +305,11 @@ public abstract class User implements Serializable{
             
             int i = 1;
             for (TrainSession session : this.sessions) {
-                sb.append("Train Session ").append(i).append(" - Realization Date: ").append(session.getDate()).append("\n");
+                sb.append("Train Session ").append(i).append(" - Realization Date: ").append(session.getDate()).append(" - Expected Calories: ").append(this.calcSessionCalories(i-1)).append("\n");
                 int j = 1;
                 for (Activity activity : session.getActivitiesList()) {
                     double calories = calcActivityCalories(session, j - 1);
-                    sb.append("\tActivity ").append(j).append(": ").append(activity.toString()).append(" - Expected Calories: ").append(calories).append("\n");
+                    sb.append("\tActivity ").append(j).append(": ").append(activity.toString()).append(" - Expected Calories: ").append((int)calories).append("\n");
                     j++;
                 }
                 i++;

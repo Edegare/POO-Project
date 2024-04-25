@@ -7,6 +7,7 @@ public abstract class Activity implements Serializable{
     private double duration; //Hours
 
     public Activity(String name, double duration) {
+        this.name=name;
         this.duration = duration;
     }
 
@@ -41,6 +42,22 @@ public abstract class Activity implements Serializable{
         return this instanceof Hard;
     }
     
+    public boolean isDistanceAltimetryActivity() {
+        return this instanceof DistanceAltimetryActivity;
+    }
+
+    public boolean isDistanceActivity() {
+        return this instanceof DistanceActivity;
+    }
+
+    public boolean isWeightActivity() {
+        return this instanceof WeightActivity;
+    }
+
+    public boolean isRepetitionActivity() {
+        return this instanceof RepetitionActivity;
+    }
+
     //Equals 
     //public abstract boolean equals(Object obj);
 
