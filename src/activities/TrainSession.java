@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrainSession implements Serializable{
     private LocalDate date;
@@ -12,12 +13,13 @@ public class TrainSession implements Serializable{
 
     //Constructors
     public TrainSession() {
+        this.date = LocalDate.now();
         this.activitiesList = new ArrayList<>();
     }
     
     public TrainSession(List<Activity> activities, LocalDate date) {
         this.activitiesList = activities.stream()
-                             .map(a->a.clone()).toList();
+                             .map(a->a.clone()).collect(Collectors.toList());
         this.date = date;
     }
 
@@ -32,14 +34,14 @@ public class TrainSession implements Serializable{
 
     public List<Activity> getActivitiesList() {
         return this.activitiesList.stream()
-                .map(a->a.clone()).toList();
+                .map(a->a.clone()).collect(Collectors.toList());
     }
 
     public void setActivitiesList(List<Activity> activities) {
         this.activitiesList.clear();
     
         this.activitiesList.addAll(activities.stream()
-                .map(a->a.clone()).toList());
+                .map(a->a.clone()).collect(Collectors.toList()));
     }
 
     //Other methods
@@ -92,16 +94,14 @@ public class TrainSession implements Serializable{
     public String toString() {
         StringBuilder sb = new StringBuilder();
         
-        if (!(this.activitiesList.isEmpty())) {
-            int i = 1; 
-            sb.append("Train Session Date: ").append(this.date).append("\n");
-            sb.append("All Activities of the Train Session:\n");
-            
-            for (Activity a : this.activitiesList) {
-                sb.append(i).append(". "); 
-                sb.append(a.toString()).append("\n"); 
-                i++; 
-            }
+        int i = 1; 
+        sb.append("Train Session Date: ").append(this.date).append("\n");
+        sb.append("All Activities of the Train Session:\n");
+        
+        for (Activity a : this.activitiesList) {
+            sb.append(i).append(". "); 
+            sb.append(a.toString()).append("\n"); 
+            i++; 
         }
         return sb.toString();
     }
@@ -117,9 +117,9 @@ public class TrainSession implements Serializable{
     //Clone
     public TrainSession clone() {
         TrainSession trainSession = new TrainSession();
-
+        trainSession.date=this.date; 
         trainSession.activitiesList = this.activitiesList.stream()
-                                      .map(a->a.clone()).toList();
+                                      .map(a->a.clone()).collect(Collectors.toList());
         
         return trainSession;
     }
