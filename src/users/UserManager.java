@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import activities.TrainSession;
 
 public class UserManager implements Serializable{
     private Map<String, User> usersMap;
@@ -90,6 +91,55 @@ public class UserManager implements Serializable{
         return mostCaloriesUser;
     }
 
+    //Get a user with the most activities till a date
+    public User getUserWithMostActivities(LocalDate date) {
+        User userWithMostActivities = null;
+        int maxActivities = 0;
+
+        for (User user : usersMap.values()) {
+            int activityCount = user.countTotalActivities(date);
+            
+            if (activityCount > maxActivities) {
+                maxActivities = activityCount;
+                userWithMostActivities = user;
+            }
+        }
+
+        return userWithMostActivities; // may return null if the map is empty
+    }
+
+    //Get the most practiced activity type
+    public String getMostPracticedActivity(LocalDate date) {
+        Map<String, Integer> activityCountMap = new HashMap<>();
+
+        for (User user : usersMap.values()) {
+            String mostPracticedActivity = user.getNameMostPracticedActivity(date);
+            activityCountMap.put(mostPracticedActivity, activityCountMap.getOrDefault(mostPracticedActivity, 0) + 1);
+        }
+
+        return activityCountMap.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse(null); // In case there are no activities.
+    }
+
+    //Get the most demanding training plan
+    public TrainSession getMostDemandingTrainingPlan() {
+        TrainSession mostDemandingPlan = null;
+        double highestCalories = 0;
+
+        for (User user : usersMap.values()) {
+            for (TrainSession session : user.getSessions()) {
+                double sessionCalories = user.calcSessionCalories(user.getSessions().indexOf(session));
+                if (sessionCalories > highestCalories) {
+                    highestCalories = sessionCalories;
+                    mostDemandingPlan = session;
+                }
+            }
+        }
+
+        return mostDemandingPlan; // Can be null if no sessions are found.
+    } 
     
     // Serialization (Save and load users)
     public void saveUsers(String path) throws IOException {

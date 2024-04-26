@@ -205,6 +205,19 @@ public abstract class User implements Serializable{
         return (int)total;
     }
 
+    //Get a total number of activities
+    public int countTotalActivities(LocalDate date) {
+        int totalActivities = 0;
+    
+        for (TrainSession session : this.sessions) {
+            if (date == null || !session.getDate().isAfter(date)) {
+                totalActivities += session.getActivitiesList().size();
+            }
+        }
+    
+        return totalActivities;
+    }
+
     // Get the name of the most practiced activity
     public String getNameMostPracticedActivity(LocalDate date) {
         Map<String, Integer> activityCount = new HashMap<>();
