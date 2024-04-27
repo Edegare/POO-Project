@@ -37,10 +37,10 @@ public class TrailRun extends DistanceAltimetryActivity implements Hard{
 
     //ToString
     public String toString() {
-        return "Track Run {" +
+        return "Trail Run {" +
                 "duration = " + getDuration() +
                 ", distance = " + getDistance() + " Km" +
-                ", height = " + getHeight() + " Km";
+                ", height = " + getHeight() + " Km}";
     }
 
     //clone
