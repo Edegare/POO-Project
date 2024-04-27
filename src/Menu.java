@@ -85,6 +85,10 @@ public class Menu {
                     System.out.println();
                     System.out.println(this.userManager.toString());
                     break; 
+                case 4: 
+                    System.out.println(); 
+                    this.displayUserStatsMenu();
+                    break;
                 case 6:
                     //save users
                     try {
@@ -445,6 +449,74 @@ public class Menu {
         } while (choice != 5);
     }
 
+    private void displayUserStatsMenu() {
+        int choice;
+    
+        do {
+            // Display the User Stats menu
+            System.out.println();
+            System.out.println("===== User Stats =====");
+            System.out.println("1. User who expended the most calories in a period or ever");
+            System.out.println("2. User who performed the most activities in a period or ever");
+            System.out.println("3. Most performed activity type");
+            System.out.println("4. Total kilometers a user has done in a period or ever");
+            System.out.println("5. Total altitude meters a user has done in a period or ever");
+            System.out.println("6. Most demanding training plan based on proposed calorie expenditure");
+            System.out.println("7. List a user's activities");
+            System.out.println("8. Return to Menu");
+            System.out.print("Enter your choice: ");
+    
+            // User choice
+            choice = this.scanner.nextInt();
+            this.scanner.nextLine();
+    
+            System.out.println();
+    
+            // Options
+            switch (choice) {
+                case 1:
+                    // Implement functionality for option 1
+                    break;
+                case 2:
+                    User user = this.userManager.getUserWithMostActivities(date);
+                    if(user != null){
+                        System.out.println();  
+                        System.out.println("The name of the user: " + user.getName());
+                    }
+                    break;
+                case 3:
+                    System.out.println();  
+                    System.out.println("The name of the most popular activity: " + this.userManager.getMostPracticedActivity()); 
+                    break;
+                case 4:
+                    // Implement functionality for option 4
+                    break;
+                case 5:
+                    // Implement functionality for option 5
+                    break;
+                case 6:
+                    TrainSession trainsession  = userManager.getMostDemandingTrainingPlan();
+                    System.out.println();  
+                    if(trainsession != null){
+                        System.out.println(trainsession.toString());
+                    }
+                    break;
+                case 7:
+                    // Implement functionality for option 7
+                    break;
+                case 8:
+                    System.out.println("Returning to menu...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+    
+            System.out.println();
+    
+        } while (choice != 8);
+    }
+
     // ================= Create train Session Menu =================
     private void createTrainSession(User u) {
         TrainSession newSession =  new TrainSession();
@@ -597,4 +669,6 @@ public class Menu {
         
     } 
 }
+
+
 
