@@ -249,6 +249,25 @@ public abstract class User implements Serializable{
         return mostPracticedActivity;
     }
 
+    //Get all of the activitie names and their respective counts
+    public Map<String, Integer> getActivityCounts() {
+        Map<String, Integer> activityCounts = new HashMap<>();
+    
+        for (TrainSession session : sessions) {
+            for (Activity activity : session.getActivitiesList()) {
+                String activityType = activity.getName();
+    
+                if (activityCounts.containsKey(activityType)) {
+                    activityCounts.put(activityType, activityCounts.get(activityType) + 1);
+                } else {
+                    activityCounts.put(activityType, 1);
+                }
+            }
+        }
+    
+        return activityCounts;
+    }
+
 
     // Add session
     public void addSession(TrainSession session) {

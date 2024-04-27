@@ -109,15 +109,21 @@ public class UserManager implements Serializable{
     }
 
     //Get the most practiced activity type
-    public String getMostPracticedActivity(LocalDate date) {
-        Map<String, Integer> activityCountMap = new HashMap<>();
-
+    public String getMostPracticedActivity() {
+        Map<String, Integer> activityCounts = new HashMap<>();
+    
         for (User user : usersMap.values()) {
-            String mostPracticedActivity = user.getNameMostPracticedActivity(date);
-            activityCountMap.put(mostPracticedActivity, activityCountMap.getOrDefault(mostPracticedActivity, 0) + 1);
+            Map<String, Integer> userActivityCounts = user.getActivityCounts();
+    
+            for (Map.Entry<String, Integer> entry : userActivityCounts.entrySet()) {
+                String activityType = entry.getKey();
+                int count = entry.getValue();
+    
+                activityCounts.put(activityType, activityCounts.getOrDefault(activityType, 0) + count);
+            }
         }
-
-        return activityCountMap.entrySet().stream()
+    
+        return activityCounts.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
                 .orElse(null); // In case there are no activities.
