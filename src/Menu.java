@@ -62,7 +62,7 @@ public class Menu {
             System.out.println("1. Register (Create new Account)");
             System.out.println("2. Login (Use an Account already registered)");
             System.out.println("3. View all Users registered");
-            System.out.println("4. Some Users Stats");
+            System.out.println("4. Stats");
             System.out.println("5. Change Date");
             System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
@@ -87,7 +87,21 @@ public class Menu {
                     break; 
                 case 4: 
                     System.out.println(); 
-                    this.displayUserStatsMenu();
+                    this.displayStatsMenu();
+                    break;
+                case 5:
+                    System.out.println("Program Actual Date: " + this.date);
+                    System.out.println("Write a date with format yyyy-MM-dd: ");
+                    String input = this.scanner.nextLine();
+                    
+                    try {
+                        this.date = LocalDate.parse(input);
+                        System.out.println("New Program Date: " + this.date);
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Format incorrect. Use the format yyyy-MM-dd.");
+                        return;
+                    }
+
                     break;
                 case 6:
                     //save users
@@ -416,17 +430,15 @@ public class Menu {
                     createTrainSession(user);
                     break; 
                 case 4:
-                    int delete = 0;
-                    int session = 0;
                     System.out.println(user.toStringSessions());
                     System.out.println("Choose a Session to Delete: ");
-                    delete = this.scanner.nextInt();
+                    int session = this.scanner.nextInt();
                     this.scanner.nextLine();
                     if (session > 0 && session < user.countSessions()) { 
-                        System.out.println("Do You really want to delete this session?");
+                        System.out.println("Do You really want to delete Train Session " + session + " this session?");
                         System.out.println("1. Yes");
                         System.out.println("2. No");
-                        delete = this.scanner.nextInt();
+                        int delete = this.scanner.nextInt();
                         this.scanner.nextLine(); 
                         if (delete==1) {
                             user.removeSession(session-1);
@@ -449,21 +461,19 @@ public class Menu {
         } while (choice != 5);
     }
 
-    private void displayUserStatsMenu() {
+ // ================= Stats Main Menu =================
+    private void displayStatsMenu() {
         int choice;
     
         do {
-            // Display the User Stats menu
+            // Display the Stats menu
             System.out.println();
-            System.out.println("===== User Stats =====");
-            System.out.println("1. User who expended the most calories in a period or ever");
-            System.out.println("2. User who performed the most activities in a period or ever");
-            System.out.println("3. Most performed activity type");
-            System.out.println("4. Total kilometers a user has done in a period or ever");
-            System.out.println("5. Total altitude meters a user has done in a period or ever");
-            System.out.println("6. Most demanding training plan based on proposed calorie expenditure");
-            System.out.println("7. List a user's activities");
-            System.out.println("8. Return to Menu");
+            System.out.println("===== Stats =====");
+            System.out.println("1. User who expended the most calories till now");
+            System.out.println("2. User who performed the most activities till now");
+            System.out.println("3. Most performed activity");
+            System.out.println("4. Most demanding training plan based on proposed calorie expenditure");
+            System.out.println("5. Return to Menu");
             System.out.print("Enter your choice: ");
     
             // User choice
@@ -475,13 +485,17 @@ public class Menu {
             // Options
             switch (choice) {
                 case 1:
-                    // Implement functionality for option 1
+                    User userMostCalories = this.userManager.mostCaloriesUser(this.date);
+                    if(userMostCalories != null){
+                        System.out.println();  
+                        System.out.println("The user who expended the most calories is: " + userMostCalories.getId() + " - " + userMostCalories.getName());
+                    }
                     break;
                 case 2:
-                    User user = this.userManager.getUserWithMostActivities(date);
+                    User user = this.userManager.getUserWithMostActivities(this.date);
                     if(user != null){
                         System.out.println();  
-                        System.out.println("The name of the user: " + user.getName());
+                        System.out.println("The user who performed the most activities is: " + user.getId() + " - " + user.getName());
                     }
                     break;
                 case 3:
@@ -489,22 +503,13 @@ public class Menu {
                     System.out.println("The name of the most popular activity: " + this.userManager.getMostPracticedActivity()); 
                     break;
                 case 4:
-                    // Implement functionality for option 4
-                    break;
-                case 5:
-                    // Implement functionality for option 5
-                    break;
-                case 6:
                     TrainSession trainsession  = userManager.getMostDemandingTrainingPlan();
                     System.out.println();  
                     if(trainsession != null){
                         System.out.println(trainsession.toString());
                     }
                     break;
-                case 7:
-                    // Implement functionality for option 7
-                    break;
-                case 8:
+                case 5:
                     System.out.println("Returning to menu...");
                     break;
                 default:
@@ -514,7 +519,7 @@ public class Menu {
     
             System.out.println();
     
-        } while (choice != 8);
+        } while (choice != 5);
     }
 
     // ================= Create train Session Menu =================

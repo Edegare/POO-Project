@@ -108,7 +108,7 @@ public class UserManager implements Serializable{
         return userWithMostActivities; // may return null if the map is empty
     }
 
-    //Get the most practiced activity type
+    //Get the most practiced activity name
     public String getMostPracticedActivity() {
         Map<String, Integer> activityCounts = new HashMap<>();
     
@@ -116,10 +116,10 @@ public class UserManager implements Serializable{
             Map<String, Integer> userActivityCounts = user.getActivityCounts();
     
             for (Map.Entry<String, Integer> entry : userActivityCounts.entrySet()) {
-                String activityType = entry.getKey();
+                String activityName = entry.getKey();
                 int count = entry.getValue();
     
-                activityCounts.put(activityType, activityCounts.getOrDefault(activityType, 0) + count);
+                activityCounts.put(activityName, activityCounts.getOrDefault(activityName, 0) + count);
             }
         }
     
@@ -136,7 +136,7 @@ public class UserManager implements Serializable{
 
         for (User user : usersMap.values()) {
             for (TrainSession session : user.getSessions()) {
-                double sessionCalories = user.calcSessionCalories(user.getSessions().indexOf(session));
+                double sessionCalories = session.calcSessionCalories();
                 if (sessionCalories > highestCalories) {
                     highestCalories = sessionCalories;
                     mostDemandingPlan = session;

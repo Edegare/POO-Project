@@ -165,7 +165,7 @@ public abstract class User implements Serializable{
     }
 
     // Get User Altimetry meters
-    public int getTotalHeightMeters(LocalDate date) {
+    public double getTotalHeightMeters(LocalDate date) {
 
         double total = 0;
 
@@ -180,12 +180,12 @@ public abstract class User implements Serializable{
             }
         }
         //transform to meters
-        total *= 100; 
-        return (int)total;
+        total *= 1000; 
+        return total;
     }
 
     // Get User Kms done
-    public int getTotalDistance(LocalDate date) {
+    public double getTotalDistance(LocalDate date) {
 
         double total = 0;
         for (TrainSession session : this.sessions) {
@@ -202,7 +202,7 @@ public abstract class User implements Serializable{
                 }
             }
         }
-        return (int)total;
+        return total;
     }
 
     //Get a total number of activities
