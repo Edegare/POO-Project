@@ -433,7 +433,7 @@ public class Menu {
 
         sessionMenu.setTitle("Create a new Train Session");
 
-        final int[] nActivities = {0};
+        final int[] nActivities = { 0 };
 
         sessionMenu.setHandler(1, () -> {
             int erro = 0;
@@ -550,10 +550,10 @@ public class Menu {
         sessionMenu.setHandler(2, () -> {
             System.out.println(newSession.toString());
             double totalCalories = u.multiplierCaloriesTypeUser() * newSession.calcSessionCalories();
-            System.out.println("\nSession total Calories -> " + (int)totalCalories);
+            System.out.println("\nSession total Calories -> " + (int) totalCalories);
         });
         sessionMenu.setHandler(3, () -> {
-            if (newSession.getActivitiesCount()>0) {
+            if (newSession.getActivitiesCount() > 0) {
                 u.addSession(newSession);
             }
             System.out.println("Saving and Exiting...");
