@@ -28,7 +28,7 @@ public class ListMenu {
         this.runOnce = runOnce;
         this.opcoes.forEach(s -> {
             this.disponivel.add(() -> true);
-            this.handlers.add(() -> System.out.println("\nATTENTION: Choice not implemented!"));
+            this.handlers.add(() -> System.out.println("\nATTENTION: Option not implemented!"));
         });
     }
 
@@ -80,7 +80,7 @@ public class ListMenu {
     private int readOption() {
         int op;
 
-        System.out.print("Choice: ");
+        System.out.print("Option: ");
         try {
             String line = is.nextLine();
             op = Integer.parseInt(line);
